@@ -16,7 +16,7 @@ echo "Running ktlintCheck..."
 # --keep-index keeps the staged changes in the worktree.
 STASH_COUNT_BEFORE=$(git stash list | wc -l | tr -d ' ')
 STASH_NAME="pre-commit-ktlint-$(date +%s)"
-git stash push -q --keep-index -m "$STASH_NAME"
+git stash push -q --keep-index --include-untracked -m "$STASH_NAME"
 STASH_COUNT_AFTER=$(git stash list | wc -l | tr -d ' ')
 
 # 2. Run ktlintCheck.
