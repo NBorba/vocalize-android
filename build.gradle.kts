@@ -37,11 +37,6 @@ tasks.register("installGitHooks") {
             // Only overwrite if the content has changed
             if (currentContent == newContent) {
                 shouldWrite = false
-            } else {
-                // If the file exists and is different, back it up before overwriting
-                val backupFile = File(targetFile.parentFile, "${targetFile.name}.old")
-                targetFile.copyTo(backupFile, overwrite = true)
-                logger.lifecycle("Existing pre-commit hook backed up to: ${backupFile.absolutePath}")
             }
         } else {
             // Ensure the .git/hooks directory exists (e.g., in a fresh clone)
