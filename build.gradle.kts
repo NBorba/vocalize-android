@@ -11,16 +11,21 @@ tasks.register("installGitHooks") {
     val projectDir = layout.projectDirectory
     // Path to the template script in the project
     val sourceFile = projectDir.file("scripts/pre-commit-ktlint.sh").asFile
-    // Target path where Git looks for the pre-commit hook
-    val targetFile = projectDir.file(".git/hooks/pre-commit").asFile
+    // Target path where Git looks for the pre-commit hook.
+    // We resolve this via 'git rev-parse --git-path' to support worktrees and custom core.hooksPath.
+    val targetFile = providers.exec {
+        commandLine("git", "rev-parse", "--git-path", "hooks/pre-commit")
+    }.standardOutput.asText.map { projectDir.file(it.trim()).asFile }.get()
+
+    // Get the current Java home to ensure the hook uses the project's Java version
+    val javaHome = System.getProperty("java.home")
 
     // Declare inputs and outputs for Gradle build optimization (up-to-date checks)
     inputs.file(sourceFile)
+    inputs.property("javaHome", javaHome)
     outputs.file(targetFile)
 
     doLast {
-        // Get the current Java home to ensure the hook uses the project's Java version
-        val javaHome = System.getProperty("java.home")
         val originalContent = sourceFile.readText()
         // Inject the JAVA_HOME export into the script content
         val newContent = originalContent.replaceFirst("#!/bin/sh", "#!/bin/sh\n\nexport JAVA_HOME=\"$javaHome\"")
@@ -34,7 +39,7 @@ tasks.register("installGitHooks") {
                 shouldWrite = false
             } else {
                 // If the file exists and is different, back it up before overwriting
-                val backupFile = projectDir.file(".git/hooks/pre-commit.old").asFile
+                val backupFile = File(targetFile.parentFile, "${targetFile.name}.old")
                 targetFile.copyTo(backupFile, overwrite = true)
                 logger.lifecycle("Existing pre-commit hook backed up to: ${backupFile.absolutePath}")
             }

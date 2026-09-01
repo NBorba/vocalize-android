@@ -14,8 +14,10 @@ echo "Running ktlintCheck..."
 
 # 1. Stash unstaged changes to ensure ktlintCheck only sees what's being committed.
 # --keep-index keeps the staged changes in the worktree.
+STASH_COUNT_BEFORE=$(git stash list | wc -l | tr -d ' ')
 STASH_NAME="pre-commit-ktlint-$(date +%s)"
 git stash push -q --keep-index -m "$STASH_NAME"
+STASH_COUNT_AFTER=$(git stash list | wc -l | tr -d ' ')
 
 # 2. Run ktlintCheck.
 # Capture the exit status so we can restore the stash even if linting fails.
@@ -24,9 +26,8 @@ set +e
 RESULT=$?
 set -e
 
-# 3. Restore unstaged changes.
-# Check if the stash we just created is at the top of the stack.
-if git stash list | head -n 1 | grep -q "$STASH_NAME"; then
+# 3. Restore unstaged changes if a stash was created.
+if [ "$STASH_COUNT_AFTER" -gt "$STASH_COUNT_BEFORE" ]; then
     git stash pop -q
 fi
 
