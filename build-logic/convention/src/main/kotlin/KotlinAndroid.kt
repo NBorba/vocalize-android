@@ -22,7 +22,3 @@ internal fun Project.configureKotlinAndroid(
         jvmToolchain(21)
     }
 }
-
-
-
-
