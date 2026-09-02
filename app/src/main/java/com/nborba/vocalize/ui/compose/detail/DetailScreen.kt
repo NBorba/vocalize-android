@@ -24,7 +24,7 @@ import com.nborba.vocalize.core.designsystem.component.VocalizeScaffold
 import com.nborba.vocalize.core.designsystem.theme.spacing
 
 @Composable
-fun DetailScreen(
+internal fun DetailScreen(
     modifier: Modifier = Modifier,
     id: String,
     onUpClick: () -> Unit,
@@ -78,7 +78,7 @@ private fun DetailContent(
 
 @Preview
 @Composable
-fun DetailContentPreview() {
+private fun DetailContentPreview() {
     val context = LocalContext.current
     val toast: (String) -> Unit = { message ->
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()

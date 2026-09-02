@@ -13,7 +13,7 @@ import com.nborba.vocalize.ui.compose.detail.DetailScreen
 import com.nborba.vocalize.ui.compose.home.HomeScreen
 
 @Composable
-fun VocalizeApp(navController: NavHostController = rememberNavController()) {
+internal fun VocalizeApp(navController: NavHostController = rememberNavController()) {
     NavHost(
         navController = navController,
         startDestination = HomeRoute,

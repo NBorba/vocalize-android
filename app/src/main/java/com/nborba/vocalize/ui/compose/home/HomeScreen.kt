@@ -21,7 +21,7 @@ import com.nborba.vocalize.core.designsystem.theme.spacing
 import kotlin.random.Random
 
 @Composable
-fun HomeScreen(
+internal fun HomeScreen(
     modifier: Modifier = Modifier,
     onNavigateToDetail: (String) -> Unit,
 ) {
@@ -66,7 +66,7 @@ private fun HomeContent(
 
 @Preview
 @Composable
-fun HomeContentPreview() {
+private fun HomeContentPreview() {
     val context = LocalContext.current
     val toast: (String) -> Unit = { message ->
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
