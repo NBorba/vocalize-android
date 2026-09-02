@@ -10,7 +10,7 @@ kotlin = "2.4.10"
 composeBom = "2026.08.00"
 ktlint = "14.2.0"
 hilt = "2.60.1"
-ksp = "2.1.20-1.0.31"
+ksp = "2.3.10"
 
 [libraries]
 
