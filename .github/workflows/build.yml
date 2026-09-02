@@ -1,4 +1,4 @@
-name: Lint
+name: Build
 
 on:
   push:
@@ -10,8 +10,8 @@ permissions:
   contents: read
 
 jobs:
-  ktlint:
-    name: Run KtLint
+  build:
+    name: Assemble Debug
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -22,5 +22,5 @@ jobs:
       - name: Setup environment
         uses: ./.github/actions/setup-gradle
 
-      - name: Run ktlint
-        run: ./gradlew ktlintCheck
+      - name: Run build
+        run: ./gradlew assembleDebug
