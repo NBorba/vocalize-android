@@ -1,6 +1,9 @@
 package com.nborba.vocalize.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,6 +20,7 @@ internal fun VocalizeApp(navController: NavHostController = rememberNavControlle
     NavHost(
         navController = navController,
         startDestination = HomeRoute,
+        modifier = Modifier.background(MaterialTheme.colorScheme.background),
     ) {
         // TODO: Set up actual feature module with inner nav graphs.
         //  For now, these screens are just placeholders
