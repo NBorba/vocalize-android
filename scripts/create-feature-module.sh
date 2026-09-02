@@ -12,6 +12,13 @@ fi
 RAW_NAME="$1"
 # Convert to lowercase and sanitize hyphens/spaces
 BASE_NAME=$(echo "$RAW_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | sed 's/-api$//' | sed 's/-impl$//')
+
+if [[ -z "$BASE_NAME" || ! "$BASE_NAME" =~ ^[a-z0-9_-]+$ ]]; then
+    echo "Error: Invalid feature name '$RAW_NAME'."
+    echo "Feature name must contain only alphanumeric characters, hyphens, or underscores."
+    exit 1
+fi
+
 PKG_BASE=$(echo "$BASE_NAME" | tr '-' '_')
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"

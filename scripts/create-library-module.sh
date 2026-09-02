@@ -14,6 +14,19 @@ RAW_NAME="$1"
 PREFIX="${2:-core}" # Defaults to 'core' as per standard Android conventions (:core:data, :core:model, etc.)
 
 MODULE_NAME=$(echo "$RAW_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+
+if [[ -z "$MODULE_NAME" || ! "$MODULE_NAME" =~ ^[a-z0-9_-]+$ ]]; then
+    echo "Error: Invalid module name '$RAW_NAME'."
+    echo "Module name must contain only alphanumeric characters, hyphens, or underscores."
+    exit 1
+fi
+
+if [[ -z "$PREFIX" || ! "$PREFIX" =~ ^[a-z0-9_-]+$ ]]; then
+    echo "Error: Invalid prefix '$PREFIX'."
+    echo "Prefix must contain only alphanumeric characters, hyphens, or underscores."
+    exit 1
+fi
+
 PACKAGE_NAME=$(echo "$MODULE_NAME" | tr '-' '_')
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
