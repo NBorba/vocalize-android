@@ -9,6 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
 
+/**
+ * @param dynamicColor Keep dynamic color true until/if branding is required.
+ *                     Follows MaterialYou by default.
+ */
 @Composable
 fun VocalizeTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

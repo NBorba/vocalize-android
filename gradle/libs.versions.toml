@@ -14,6 +14,7 @@ ksp = "2.3.10"
 navigationCompose = "2.10.0"
 kotlinxSerialization = "1.11.0"
 hiltNavigationCompose = "1.4.0"
+core = "1.19.0"
 
 [libraries]
 # Dependencies required by :build-logic to compile against Gradle plugins
