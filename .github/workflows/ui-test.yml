@@ -19,7 +19,7 @@ jobs:
         api-level: [26, 34, 35]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           persist-credentials: false
 
@@ -33,7 +33,7 @@ jobs:
         uses: ./.github/actions/setup-gradle
 
       - name: Run UI tests on Android Emulator
-        uses: ReactiveCircus/android-emulator-runner@v2
+        uses: ReactiveCircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
         with:
           api-level: ${{ matrix.api-level }}
           target: google_apis
@@ -45,7 +45,7 @@ jobs:
 
       - name: Upload UI Test Reports
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ui-test-reports-api-${{ matrix.api-level }}
           path: '**/build/reports/androidTests/**'
