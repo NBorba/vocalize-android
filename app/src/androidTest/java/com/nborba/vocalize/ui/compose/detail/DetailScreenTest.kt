@@ -5,6 +5,7 @@ import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import com.nborba.vocalize.core.designsystem.theme.VocalizeTheme
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
@@ -18,11 +19,13 @@ class DetailScreenTest {
         val testId = "42"
 
         composeTestRule.setContent {
-            DetailScreen(
-                id = testId,
-                onUpClick = {},
-                onBackClick = {},
-            )
+            VocalizeTheme {
+                DetailScreen(
+                    id = testId,
+                    onUpClick = {},
+                    onBackClick = {},
+                )
+            }
         }
 
         composeTestRule.onNodeWithText("Detail #42").assertIsDisplayed()
@@ -36,11 +39,13 @@ class DetailScreenTest {
         var upClicked = false
 
         composeTestRule.setContent {
-            DetailScreen(
-                id = "100",
-                onUpClick = { upClicked = true },
-                onBackClick = {},
-            )
+            VocalizeTheme {
+                DetailScreen(
+                    id = "100",
+                    onUpClick = { upClicked = true },
+                    onBackClick = {},
+                )
+            }
         }
 
         composeTestRule.onNodeWithContentDescription("Back").performClick()
@@ -53,11 +58,13 @@ class DetailScreenTest {
         var backClicked = false
 
         composeTestRule.setContent {
-            DetailScreen(
-                id = "100",
-                onUpClick = {},
-                onBackClick = { backClicked = true },
-            )
+            VocalizeTheme {
+                DetailScreen(
+                    id = "100",
+                    onUpClick = {},
+                    onBackClick = { backClicked = true },
+                )
+            }
         }
 
         composeTestRule.onNodeWithText("Go back").performClick()

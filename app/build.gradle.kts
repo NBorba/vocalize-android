@@ -44,6 +44,8 @@ kotlin {
 }
 
 dependencies {
+    implementation(project(":core:designsystem"))
+
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 

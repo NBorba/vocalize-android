@@ -8,10 +8,23 @@ Vocalize follows a modularized, scalable Android architecture powered by **Gradl
 
 ### Module Categories
 
-* **`:app`**: Root application module that assembles all feature implementations, configures Hilt (`@HiltAndroidApp`), and initializes root navigation/Activities.
-* **`:core:<name>`** (e.g., `:core:data`, `:core:network`, `:core:ui`): Independent library modules providing shared data repositories, network clients, or UI themes. Configured with the `vocalize.android.library` convention plugin.
-* **`:feature:<name>-api`**: Public interface module for a feature. Exposes navigation routes, public interfaces, and data models to other modules without leaking private implementation details. Configured with `vocalize.android.library`.
+* **`:app`**: Root application module that assembles feature implementations, configures Hilt (`@HiltAndroidApp`), and initializes root navigation/Activities.
+* **`:core:<name>`** (e.g., `:core:designsystem`, `:core:data`, `:core:network`): Shared library modules providing UI design tokens, data repositories, network clients, or utility helpers. Configured with the `vocalize.android.library` convention plugin.
+* **`:feature:<name>-api`**: Public interface module for a feature. Exposes navigation routes, interfaces, and data models to other modules without leaking private implementation details. Configured with `vocalize.android.library`.
 * **`:feature:<name>-impl`**: Private implementation module containing ViewModels, Composables, and Hilt DI bindings (`@Module`). Depends on `:feature:<name>-api` and is configured with the `vocalize.android.feature` convention plugin.
+
+### 🎨 Design System (`:core:designsystem`)
+
+The `:core:designsystem` module acts as the single source of truth for the visual identity and UI primitives of Vocalize:
+
+* **Theme & Material You (`VocalizeTheme`)**: Wraps `MaterialTheme` with support for Light/Dark modes and Android 12+ dynamic colors (Material You).
+* **Design Tokens**:
+  * **Colors (`Color.kt`)**: Defines raw color palettes and maps them to semantic Material 3 `ColorScheme` roles.
+  * **Spacing (`Spacing.kt`)**: Custom spacing scale exposed via `CompositionLocal` (`MaterialTheme.spacing`).
+  * **Typography (`Type.kt`)**: Tuned typography scale across Display, Headline, Title, Body, and Label roles.
+  * **Shapes (`Shape.kt`)**: Corner radius scales for components (cards, dialogs, buttons, sheets).
+* **Icon Registry (`VocalizeIcons`)**: Centralized icon registry object wrapping Material icons and custom vector assets so features don't couple directly to drawable IDs.
+* **Feature Convention Plugin Integration**: Automatically included in all feature modules via the `vocalize.android.feature` convention plugin.
 
 ### 💉 Dependency Injection (Hilt & KSP)
 
