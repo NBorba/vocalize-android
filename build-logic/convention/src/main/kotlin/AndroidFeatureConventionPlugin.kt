@@ -23,6 +23,9 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
+                // Design System dependency for all feature modules
+                implementation(project(":core:designsystem"))
+
                 implementation(platform(libs.findLibrary("androidx.compose.bom").get()))
                 implementation(libs.findLibrary("androidx.activity.compose").get())
                 implementation(libs.findLibrary("androidx.compose.material3").get())
