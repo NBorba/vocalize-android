@@ -4,20 +4,24 @@ package com.nborba.vocalize.ui.compose.detail
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import com.nborba.vocalize.core.designsystem.component.VocalizeButton
 import com.nborba.vocalize.core.designsystem.component.VocalizeScaffold
+import com.nborba.vocalize.core.designsystem.theme.spacing
 
 @Composable
 fun DetailScreen(
@@ -57,10 +61,17 @@ private fun DetailContent(
         },
     ) { innerPadding ->
         Column(
-            modifier = modifier.padding(innerPadding),
+            modifier =
+                modifier
+                    .padding(innerPadding)
+                    .padding(MaterialTheme.spacing.medium),
         ) {
-            Text(text = "Viewing detail")
-            Button(onClick = onBackClick) { Text("Go back") }
+            Text(
+                text = "Viewing detail",
+                style = MaterialTheme.typography.headlineMedium,
+            )
+            Spacer(modifier = Modifier.size(MaterialTheme.spacing.small))
+            VocalizeButton(text = "Go back", onClick = onBackClick)
         }
     }
 }
