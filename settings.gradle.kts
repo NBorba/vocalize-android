@@ -1,4 +1,6 @@
 pluginManagement {
+    // Looks for plugins in the build-logic project
+    includeBuild("build-logic")
     repositories {
         google {
             content {
