@@ -35,6 +35,7 @@ fun VocalizeTheme(
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
+            shapes = VocalizeShapes,
             typography = VocalizeTypography,
             content = content,
         )
