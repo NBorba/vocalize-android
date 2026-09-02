@@ -26,3 +26,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Vocalize"
 include(":app")
+include(":core:designsystem")
