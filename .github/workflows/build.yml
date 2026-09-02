@@ -1,4 +1,4 @@
-name: Check
+name: Build
 
 on:
   push:
@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   build:
+    name: Assemble Debug
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

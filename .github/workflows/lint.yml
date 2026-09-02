@@ -1,4 +1,4 @@
-name: Check
+name: Lint
 
 on:
   push:
@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   ktlint:
+    name: Run KtLint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
