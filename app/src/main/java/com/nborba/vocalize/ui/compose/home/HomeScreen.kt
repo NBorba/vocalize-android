@@ -10,13 +10,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.nborba.vocalize.core.designsystem.component.VocalizeButton
 import com.nborba.vocalize.core.designsystem.component.VocalizeScaffold
+import com.nborba.vocalize.core.designsystem.component.VocalizeTopAppBar
 import com.nborba.vocalize.core.designsystem.theme.spacing
 import kotlin.random.Random
 
@@ -38,11 +38,7 @@ private fun HomeContent(
 ) {
     VocalizeScaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text("Vocalize")
-                },
-            )
+            VocalizeTopAppBar(title = "Vocalize")
         },
     ) { innerPadding ->
         Column(
