@@ -11,13 +11,13 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import com.nborba.vocalize.core.designsystem.component.VocalizeScaffold
 
 @Composable
 fun DetailScreen(
@@ -41,7 +41,7 @@ private fun DetailContent(
     onUpClick: () -> Unit,
     onBackClick: () -> Unit,
 ) {
-    Scaffold(
+    VocalizeScaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Detail #$id") },
