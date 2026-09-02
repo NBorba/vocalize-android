@@ -49,12 +49,12 @@ dependencies {
 EOF
 
     touch "$API_PKG_DIR/.gitkeep"
+fi
 
-    API_INCLUDE="include(\":feature:$API_MODULE_NAME\")"
-    if ! grep -Fq "$API_INCLUDE" "$SETTINGS_FILE"; then
-        echo "$API_INCLUDE" >> "$SETTINGS_FILE"
-        echo "Added '$API_INCLUDE' to settings.gradle.kts"
-    fi
+API_INCLUDE="include(\":feature:$API_MODULE_NAME\")"
+if ! grep -Fq "$API_INCLUDE" "$SETTINGS_FILE"; then
+    echo "$API_INCLUDE" >> "$SETTINGS_FILE"
+    echo "Added '$API_INCLUDE' to settings.gradle.kts"
 fi
 
 # 2. Create -impl module
@@ -83,12 +83,12 @@ dependencies {
 EOF
 
     touch "$IMPL_PKG_DIR/.gitkeep"
+fi
 
-    IMPL_INCLUDE="include(\":feature:$IMPL_MODULE_NAME\")"
-    if ! grep -Fq "$IMPL_INCLUDE" "$SETTINGS_FILE"; then
-        echo "$IMPL_INCLUDE" >> "$SETTINGS_FILE"
-        echo "Added '$IMPL_INCLUDE' to settings.gradle.kts"
-    fi
+IMPL_INCLUDE="include(\":feature:$IMPL_MODULE_NAME\")"
+if ! grep -Fq "$IMPL_INCLUDE" "$SETTINGS_FILE"; then
+    echo "$IMPL_INCLUDE" >> "$SETTINGS_FILE"
+    echo "Added '$IMPL_INCLUDE' to settings.gradle.kts"
 fi
 
 echo "✅ Feature API & IMPL modules created successfully!"

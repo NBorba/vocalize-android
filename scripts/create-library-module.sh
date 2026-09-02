@@ -34,16 +34,14 @@ MODULE_DIR="$PROJECT_ROOT/$PREFIX/$MODULE_NAME"
 PACKAGE_DIR="$MODULE_DIR/src/main/kotlin/com/nborba/vocalize/$PREFIX/$PACKAGE_NAME"
 
 if [ -d "$MODULE_DIR" ]; then
-    echo "Error: Directory '$PREFIX/$MODULE_NAME' already exists."
-    exit 1
-fi
+    echo "Warning: Directory '$PREFIX/$MODULE_NAME' already exists. Skipping directory creation."
+else
+    echo "Creating library module ':$PREFIX:$MODULE_NAME'..."
 
-echo "Creating library module ':$PREFIX:$MODULE_NAME'..."
+    mkdir -p "$PACKAGE_DIR"
 
-mkdir -p "$PACKAGE_DIR"
-
-# Create build.gradle.kts
-cat <<EOF > "$MODULE_DIR/build.gradle.kts"
+    # Create build.gradle.kts
+    cat <<EOF > "$MODULE_DIR/build.gradle.kts"
 plugins {
     id("vocalize.android.library")
 }
@@ -56,8 +54,9 @@ dependencies {
 }
 EOF
 
-# Create .gitkeep in package directory
-touch "$PACKAGE_DIR/.gitkeep"
+    # Create .gitkeep in package directory
+    touch "$PACKAGE_DIR/.gitkeep"
+fi
 
 # Update settings.gradle.kts if not already included
 SETTINGS_FILE="$PROJECT_ROOT/settings.gradle.kts"
