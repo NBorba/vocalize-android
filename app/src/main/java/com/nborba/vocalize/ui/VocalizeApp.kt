@@ -61,7 +61,7 @@ internal fun VocalizeApp() {
                 )
             }
 
-            recorderNavGraph(onDismiss = navController::popBackStack)
+            recorderNavGraph()
         }
     }
 }

@@ -10,7 +10,7 @@ import com.nborba.vocalize.feature.recorder.api.navigation.RecorderGraphRoute
 import com.nborba.vocalize.feature.recorder.impl.navigation.RecorderRoute
 import com.nborba.vocalize.feature.recorder.impl.ui.recorder.compose.RecorderBottomSheet
 
-fun NavGraphBuilder.recorderNavGraph(onDismiss: () -> Unit) {
+fun NavGraphBuilder.recorderNavGraph() {
     navigation<RecorderGraphRoute>(
         startDestination = RecorderRoute,
     ) {
@@ -21,7 +21,7 @@ fun NavGraphBuilder.recorderNavGraph(onDismiss: () -> Unit) {
                     navDeepLink<RecorderRoute>(basePath = "vocalize://recorder"),
                 ),
         ) {
-            RecorderBottomSheet(onDismissRequest = onDismiss)
+            RecorderBottomSheet()
         }
     }
 }
