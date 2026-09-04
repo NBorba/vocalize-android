@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.ktlint) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
 }
 
 // Task that will install ktlint pre-commit hook

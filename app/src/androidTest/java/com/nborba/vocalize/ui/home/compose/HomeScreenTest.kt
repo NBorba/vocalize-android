@@ -1,4 +1,4 @@
-package com.nborba.vocalize.ui.compose.home
+package com.nborba.vocalize.ui.home.compose
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createComposeRule
@@ -19,6 +19,7 @@ class HomeScreenTest {
             VocalizeTheme {
                 HomeScreen(
                     onNavigateToDetail = {},
+                    onNavigateToRecorder = {},
                 )
             }
         }
@@ -40,6 +41,7 @@ class HomeScreenTest {
                         callbackCalled = true
                         capturedId = id
                     },
+                    onNavigateToRecorder = {},
                 )
             }
         }
@@ -48,5 +50,25 @@ class HomeScreenTest {
 
         assertTrue("Expected onNavigateToDetail callback to be invoked", callbackCalled)
         assertTrue("Expected captured ID to not be empty", !capturedId.isNullOrEmpty())
+    }
+
+    @Test
+    fun clickingRecordButton_triggersCallback() {
+        var callbackCalled = false
+
+        composeTestRule.setContent {
+            VocalizeTheme {
+                HomeScreen(
+                    onNavigateToDetail = {},
+                    onNavigateToRecorder = {
+                        callbackCalled = true
+                    },
+                )
+            }
+        }
+
+        composeTestRule.onNodeWithText("Record").performClick()
+
+        assertTrue("Expected onNavigateToRecorder callback to be invoked", callbackCalled)
     }
 }

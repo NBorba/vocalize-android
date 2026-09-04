@@ -1,4 +1,4 @@
-package com.nborba.vocalize.ui.compose.detail
+package com.nborba.vocalize.ui.detail.compose
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createComposeRule
