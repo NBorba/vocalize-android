@@ -45,6 +45,8 @@ kotlin {
 
 dependencies {
     implementation(project(":core:designsystem"))
+    implementation(project(":feature:recorder-api"))
+    implementation(project(":feature:recorder-impl"))
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)

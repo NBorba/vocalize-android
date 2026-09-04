@@ -24,10 +24,12 @@ import kotlin.random.Random
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
     onNavigateToDetail: (String) -> Unit,
+    onNavigateToRecorder: () -> Unit,
 ) {
     HomeContent(
         modifier = modifier,
         onNavigateToDetail = onNavigateToDetail,
+        onNavigateToRecorder = onNavigateToRecorder,
     )
 }
 
@@ -35,6 +37,7 @@ internal fun HomeScreen(
 private fun HomeContent(
     modifier: Modifier = Modifier,
     onNavigateToDetail: (String) -> Unit,
+    onNavigateToRecorder: () -> Unit,
 ) {
     VocalizeScaffold(
         topBar = {
@@ -56,6 +59,10 @@ private fun HomeContent(
                 text = "See details",
                 onClick = { onNavigateToDetail(Random.nextInt().toString()) },
             )
+            VocalizeButton(
+                text = "Record",
+                onClick = { onNavigateToRecorder() },
+            )
         }
     }
 }
@@ -70,5 +77,6 @@ private fun HomeContentPreview() {
 
     HomeContent(
         onNavigateToDetail = { toast("onNavigateToDetail") },
+        onNavigateToRecorder = { toast("onNavigateToRecorder") },
     )
 }
