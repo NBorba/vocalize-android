@@ -8,7 +8,7 @@ import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import com.nborba.vocalize.feature.recorder.api.navigation.RecorderGraphRoute
 import com.nborba.vocalize.feature.recorder.impl.navigation.RecorderRoute
-import com.nborba.vocalize.feature.recorder.impl.ui.recorder.compose.RecorderBottomSheetScreen
+import com.nborba.vocalize.feature.recorder.impl.ui.recorder.compose.RecorderBottomSheet
 
 fun NavGraphBuilder.recorderNavGraph(onDismiss: () -> Unit) {
     navigation<RecorderGraphRoute>(
@@ -21,7 +21,7 @@ fun NavGraphBuilder.recorderNavGraph(onDismiss: () -> Unit) {
                     navDeepLink<RecorderRoute>(basePath = "vocalize://recorder"),
                 ),
         ) {
-            RecorderBottomSheetScreen(onDismissRequest = onDismiss)
+            RecorderBottomSheet(onDismissRequest = onDismiss)
         }
     }
 }

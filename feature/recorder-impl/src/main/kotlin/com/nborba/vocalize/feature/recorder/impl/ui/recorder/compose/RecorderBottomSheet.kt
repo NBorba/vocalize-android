@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun RecorderBottomSheetScreen(
+fun RecorderBottomSheet(
     modifier: Modifier = Modifier,
     onDismissRequest: () -> Unit,
 ) {
