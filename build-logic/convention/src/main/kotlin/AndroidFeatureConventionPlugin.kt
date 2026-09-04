@@ -28,9 +28,12 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
 
                 implementation(platform(libs.findLibrary("androidx.compose.bom").get()))
                 implementation(libs.findLibrary("androidx.activity.compose").get())
+                implementation(libs.findLibrary("androidx.compose.material.navigation").get())
                 implementation(libs.findLibrary("androidx.compose.material3").get())
                 implementation(libs.findLibrary("androidx.compose.ui").get())
                 implementation(libs.findLibrary("androidx.compose.ui.tooling.preview").get())
+                implementation(libs.findLibrary("androidx.hilt.navigation.compose").get())
+                implementation(libs.findLibrary("androidx.navigation.compose").get())
                 debugImplementation(libs.findLibrary("androidx.compose.ui.tooling").get())
 
                 implementation(libs.findLibrary("hilt.android").get())
