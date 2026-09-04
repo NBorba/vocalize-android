@@ -17,8 +17,8 @@ import com.nborba.vocalize.feature.recorder.api.navigation.RecorderGraphRoute
 import com.nborba.vocalize.feature.recorder.impl.ui.recorderNavGraph
 import com.nborba.vocalize.navigation.DetailRoute
 import com.nborba.vocalize.navigation.HomeRoute
-import com.nborba.vocalize.ui.compose.detail.DetailScreen
-import com.nborba.vocalize.ui.compose.home.HomeScreen
+import com.nborba.vocalize.ui.detail.compose.DetailScreen
+import com.nborba.vocalize.ui.home.compose.HomeScreen
 
 @Composable
 internal fun VocalizeApp() {

@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.nborba.vocalize.ui.compose.detail
+package com.nborba.vocalize.ui.home.compose
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -18,35 +18,30 @@ import com.nborba.vocalize.core.designsystem.component.VocalizeButton
 import com.nborba.vocalize.core.designsystem.component.VocalizeScaffold
 import com.nborba.vocalize.core.designsystem.component.VocalizeTopAppBar
 import com.nborba.vocalize.core.designsystem.theme.spacing
+import kotlin.random.Random
 
 @Composable
-internal fun DetailScreen(
+internal fun HomeScreen(
     modifier: Modifier = Modifier,
-    id: String,
-    onUpClick: () -> Unit,
-    onBackClick: () -> Unit,
+    onNavigateToDetail: (String) -> Unit,
+    onNavigateToRecorder: () -> Unit,
 ) {
-    DetailContent(
+    HomeContent(
         modifier = modifier,
-        id = id,
-        onUpClick = onUpClick,
-        onBackClick = onBackClick,
+        onNavigateToDetail = onNavigateToDetail,
+        onNavigateToRecorder = onNavigateToRecorder,
     )
 }
 
 @Composable
-private fun DetailContent(
+private fun HomeContent(
     modifier: Modifier = Modifier,
-    id: String,
-    onUpClick: () -> Unit,
-    onBackClick: () -> Unit,
+    onNavigateToDetail: (String) -> Unit,
+    onNavigateToRecorder: () -> Unit,
 ) {
     VocalizeScaffold(
         topBar = {
-            VocalizeTopAppBar(
-                title = "Detail #$id",
-                onNavigationClick = onUpClick,
-            )
+            VocalizeTopAppBar(title = "Vocalize")
         },
     ) { innerPadding ->
         Column(
@@ -56,26 +51,32 @@ private fun DetailContent(
                     .padding(MaterialTheme.spacing.medium),
         ) {
             Text(
-                text = "Viewing detail",
+                text = "Welcome to the app!",
                 style = MaterialTheme.typography.headlineMedium,
             )
             Spacer(modifier = Modifier.size(MaterialTheme.spacing.small))
-            VocalizeButton(text = "Go back", onClick = onBackClick)
+            VocalizeButton(
+                text = "See details",
+                onClick = { onNavigateToDetail(Random.nextInt().toString()) },
+            )
+            VocalizeButton(
+                text = "Record",
+                onClick = { onNavigateToRecorder() },
+            )
         }
     }
 }
 
 @Preview
 @Composable
-private fun DetailContentPreview() {
+private fun HomeContentPreview() {
     val context = LocalContext.current
     val toast: (String) -> Unit = { message ->
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    DetailContent(
-        id = "preview",
-        onUpClick = { toast("onUpClick") },
-        onBackClick = { toast("onBackClick") },
+    HomeContent(
+        onNavigateToDetail = { toast("onNavigateToDetail") },
+        onNavigateToRecorder = { toast("onNavigateToRecorder") },
     )
 }
