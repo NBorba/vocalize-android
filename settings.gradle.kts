@@ -26,6 +26,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "Vocalize"
 include(":app")
+include(":core:common")
 include(":core:designsystem")
 include(":feature:recorder-api")
 include(":feature:recorder-impl")
