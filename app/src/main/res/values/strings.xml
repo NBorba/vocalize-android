@@ -3,10 +3,10 @@
 
     <!-- Home screen -->
     <string name="home_header">Welcome to the app!</string>
-    <string name="home_btn_details">See details</string>
-    <string name="home_btn_record">Record</string>
+    <string name="home_button_details">See details</string>
+    <string name="home_button_record">Record</string>
 
     <!-- Detail screen -->
     <string name="detail_header">Detail</string>
-    <string name="detail_btn_back">Back</string>
+    <string name="detail_button_back">Back</string>
 </resources>
