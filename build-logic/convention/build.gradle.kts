@@ -26,6 +26,10 @@ gradlePlugin {
             id = "vocalize.android.feature"
             implementationClass = "com.nborba.vocalize.conventions.AndroidFeatureConventionPlugin"
         }
+        register("androidHilt") {
+            id = "vocalize.android.hilt"
+            implementationClass = "com.nborba.vocalize.conventions.AndroidHiltConventionPlugin"
+        }
     }
 }
 

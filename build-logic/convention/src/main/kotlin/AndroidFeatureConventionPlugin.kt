@@ -11,9 +11,8 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
         with(target) {
             pluginManager.apply {
                 apply("vocalize.android.library")
+                apply("vocalize.android.hilt")
                 apply("org.jetbrains.kotlin.plugin.compose")
-                apply("com.google.devtools.ksp")
-                apply("com.google.dagger.hilt.android")
             }
 
             extensions.configure<LibraryExtension> {
@@ -25,9 +24,6 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             dependencies {
                 // Design System dependency for all feature modules
                 implementation(project(":core:designsystem"))
-
-                ksp(libs.findLibrary("hilt.compiler").get())
-                implementation(libs.findLibrary("hilt.android").get())
 
                 implementation(platform(libs.findLibrary("androidx.compose.bom").get()))
                 implementation(libs.findLibrary("androidx.activity.compose").get())
