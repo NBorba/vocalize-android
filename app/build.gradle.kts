@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.testFixturesImplementation
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -36,6 +38,9 @@ android {
     buildFeatures {
         compose = true
     }
+    testFixtures {
+        enable = true
+    }
 }
 
 kotlin {
@@ -69,4 +74,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    testFixturesImplementation(platform(libs.androidx.compose.bom))
+    testFixturesImplementation(libs.androidx.compose.runtime)
+    testFixturesImplementation(libs.kotlin.stdlib)
 }
