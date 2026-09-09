@@ -74,7 +74,7 @@ private fun EffectHandler(
 }
 
 @Composable
-private fun HomeContent(
+internal fun HomeContent(
     state: HomeUiState,
     modifier: Modifier = Modifier,
     onNavigateToDetail: (String) -> Unit,

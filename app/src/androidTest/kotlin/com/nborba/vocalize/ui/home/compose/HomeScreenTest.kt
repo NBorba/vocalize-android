@@ -4,6 +4,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import com.nborba.vocalize.HomeUiStateFixture
 import com.nborba.vocalize.core.designsystem.theme.VocalizeTheme
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -17,7 +18,8 @@ class HomeScreenTest {
     fun verifyHomeScreenContentIsDisplayed() {
         composeTestRule.setContent {
             VocalizeTheme {
-                HomeScreen(
+                HomeContent(
+                    state = HomeUiStateFixture.default(),
                     onNavigateToDetail = {},
                     onNavigateToRecorder = {},
                 )
@@ -36,7 +38,8 @@ class HomeScreenTest {
 
         composeTestRule.setContent {
             VocalizeTheme {
-                HomeScreen(
+                HomeContent(
+                    state = HomeUiStateFixture.default(),
                     onNavigateToDetail = { id ->
                         callbackCalled = true
                         capturedId = id
@@ -58,7 +61,8 @@ class HomeScreenTest {
 
         composeTestRule.setContent {
             VocalizeTheme {
-                HomeScreen(
+                HomeContent(
+                    state = HomeUiStateFixture.default(),
                     onNavigateToDetail = {},
                     onNavigateToRecorder = {
                         callbackCalled = true
