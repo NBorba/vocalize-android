@@ -61,7 +61,7 @@ internal class HomeScreenViewModelTest {
         }
 
     @Test
-    fun `when onEventHandled, clears effect`() =
+    fun `when onEffectHandled, clears effect`() =
         runTest {
             viewModel.effects.test {
                 assertEquals(null, awaitItem())
@@ -69,7 +69,7 @@ internal class HomeScreenViewModelTest {
                 viewModel.onRecordButtonClick()
                 assertEquals(HomeEffect.NavigateToRecorder, awaitItem())
 
-                viewModel.onEventHandled()
+                viewModel.onEffectHandled()
                 assertEquals(null, awaitItem())
 
                 cancelAndIgnoreRemainingEvents()

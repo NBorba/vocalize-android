@@ -43,7 +43,7 @@ internal fun HomeScreen(
         effectFlow = viewModel.effects,
         onNavigateToRecorder = onNavigateToRecorder,
         onNavigateToDetail = onNavigateToDetail,
-        onEffectConsumed = viewModel::onEventHandled,
+        onEffectConsumed = viewModel::onEffectHandled,
     )
 
     HomeContent(
