@@ -30,6 +30,10 @@ gradlePlugin {
             id = "vocalize.android.hilt"
             implementationClass = "com.nborba.vocalize.conventions.AndroidHiltConventionPlugin"
         }
+        register("androidTest") {
+            id = "vocalize.android.test"
+            implementationClass = "com.nborba.vocalize.conventions.AndroidTestConventionPlugin"
+        }
     }
 }
 

@@ -29,6 +29,10 @@ fun DependencyHandler.testImplementation(provider: Any) {
     add("testImplementation", provider)
 }
 
+fun DependencyHandler.testRuntimeOnly(provider: Any) {
+    add("testRuntimeOnly", provider)
+}
+
 fun DependencyHandler.androidTestImplementation(provider: Any) {
     add("androidTestImplementation", provider)
 }

@@ -12,6 +12,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             pluginManager.apply {
                 apply("vocalize.android.library")
                 apply("vocalize.android.hilt")
+                apply("vocalize.android.test")
                 apply("org.jetbrains.kotlin.plugin.compose")
             }
 
@@ -34,16 +35,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 implementation(libs.findLibrary("androidx.compose.ui.tooling.preview").get())
                 implementation(libs.findLibrary("androidx.hilt.navigation.compose").get())
                 implementation(libs.findLibrary("androidx.navigation.compose").get())
-
-                testImplementation(libs.findLibrary("junit").get())
-                androidTestImplementation(platform(libs.findLibrary("androidx.compose.bom").get()))
-                androidTestImplementation(libs.findLibrary("androidx.compose.ui.test.junit4").get())
-                androidTestImplementation(libs.findLibrary("androidx.espresso.core").get())
-                androidTestImplementation(libs.findLibrary("androidx.junit").get())
                 debugImplementation(libs.findLibrary("androidx.compose.ui.tooling").get())
-                debugImplementation(libs.findLibrary("androidx.compose.ui.test.manifest").get())
-
-
             }
         }
     }
