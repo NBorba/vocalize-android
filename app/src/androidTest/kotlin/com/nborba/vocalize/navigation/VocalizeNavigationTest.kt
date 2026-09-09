@@ -1,28 +1,23 @@
 package com.nborba.vocalize.navigation
 
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.espresso.Espresso
-import com.nborba.vocalize.core.designsystem.theme.VocalizeTheme
-import com.nborba.vocalize.ui.VocalizeApp
+import com.nborba.vocalize.MainActivity
 import org.junit.Rule
 import org.junit.Test
 
+// TODO: Once business logic is implemented with ViewModels,
+//  we will need to provide mocked hilt modules to have consistent testing conditions.
 class VocalizeNavigationTest {
     @get:Rule
-    val composeTestRule = createComposeRule()
+    val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     @Test
     fun fullNavigationFlow_homeToDetailAndBack() {
-        composeTestRule.setContent {
-            VocalizeTheme {
-                VocalizeApp()
-            }
-        }
-
         // 1. Verify Home Screen is displayed
         composeTestRule.onNodeWithText("Welcome to the app!").assertIsDisplayed()
 
@@ -41,12 +36,6 @@ class VocalizeNavigationTest {
 
     @Test
     fun fullNavigationFlow_homeToRecorderAndBack() {
-        composeTestRule.setContent {
-            VocalizeTheme {
-                VocalizeApp()
-            }
-        }
-
         // 1. Verify Home Screen is displayed
         composeTestRule.onNodeWithText("Welcome to the app!").assertIsDisplayed()
 
