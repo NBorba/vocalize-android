@@ -11,9 +11,9 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
         with(target) {
             pluginManager.apply {
                 apply("vocalize.android.library")
+                apply("vocalize.android.hilt")
+                apply("vocalize.android.test")
                 apply("org.jetbrains.kotlin.plugin.compose")
-                apply("com.google.devtools.ksp")
-                apply("com.google.dagger.hilt.android")
             }
 
             extensions.configure<LibraryExtension> {
@@ -24,10 +24,8 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
 
             dependencies {
                 // Design System dependency for all feature modules
+                implementation(project(":core:common"))
                 implementation(project(":core:designsystem"))
-
-                ksp(libs.findLibrary("hilt.compiler").get())
-                implementation(libs.findLibrary("hilt.android").get())
 
                 implementation(platform(libs.findLibrary("androidx.compose.bom").get()))
                 implementation(libs.findLibrary("androidx.activity.compose").get())
@@ -37,16 +35,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 implementation(libs.findLibrary("androidx.compose.ui.tooling.preview").get())
                 implementation(libs.findLibrary("androidx.hilt.navigation.compose").get())
                 implementation(libs.findLibrary("androidx.navigation.compose").get())
-
-                testImplementation(libs.findLibrary("junit").get())
-                androidTestImplementation(platform(libs.findLibrary("androidx.compose.bom").get()))
-                androidTestImplementation(libs.findLibrary("androidx.compose.ui.test.junit4").get())
-                androidTestImplementation(libs.findLibrary("androidx.espresso.core").get())
-                androidTestImplementation(libs.findLibrary("androidx.junit").get())
                 debugImplementation(libs.findLibrary("androidx.compose.ui.tooling").get())
-                debugImplementation(libs.findLibrary("androidx.compose.ui.test.manifest").get())
-
-
             }
         }
     }

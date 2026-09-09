@@ -1,14 +1,17 @@
+import org.gradle.kotlin.dsl.testFixturesImplementation
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.ktlint)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ktlint)
+    id("vocalize.android.hilt")
+    id("vocalize.android.test")
 }
 
 android {
     namespace = "com.nborba.vocalize"
+
     compileSdk {
         version = release(37)
     }
@@ -30,12 +33,18 @@ android {
             }
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
     }
+
     buildFeatures {
         compose = true
+    }
+
+    testFixtures {
+        enable = true
     }
 }
 
@@ -44,32 +53,34 @@ kotlin {
 }
 
 dependencies {
+    // Modules
+    implementation(project(":core:common"))
     implementation(project(":core:designsystem"))
     implementation(project(":feature:recorder-api"))
     implementation(project(":feature:recorder-impl"))
 
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-
+    // AndroidX & Compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material.icons.core)
+    implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.compose.material.navigation)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.androidx.hilt.navigation.compose)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.junit)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
+    // Navigation & Serialization
+    implementation(libs.androidx.compose.material.navigation)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
+
+    // Debug & Testing
     debugImplementation(libs.androidx.compose.ui.tooling)
+    testImplementation(testFixtures(project(":core:common")))
+
+    // TestFixtures
+    testFixturesImplementation(platform(libs.androidx.compose.bom))
+    testFixturesImplementation(libs.androidx.compose.runtime)
 }

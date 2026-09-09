@@ -11,8 +11,8 @@ java {
 
 dependencies {
     compileOnly(libs.android.gradlePlugin)
-    compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.hilt.gradlePlugin)
+    compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
 }
 
@@ -26,6 +26,13 @@ gradlePlugin {
             id = "vocalize.android.feature"
             implementationClass = "com.nborba.vocalize.conventions.AndroidFeatureConventionPlugin"
         }
+        register("androidHilt") {
+            id = "vocalize.android.hilt"
+            implementationClass = "com.nborba.vocalize.conventions.AndroidHiltConventionPlugin"
+        }
+        register("androidTest") {
+            id = "vocalize.android.test"
+            implementationClass = "com.nborba.vocalize.conventions.AndroidTestConventionPlugin"
+        }
     }
 }
-
