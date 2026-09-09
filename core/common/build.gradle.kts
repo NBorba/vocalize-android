@@ -4,6 +4,7 @@ import org.gradle.kotlin.dsl.testFixturesImplementation
 plugins {
     id("vocalize.android.library")
     id("vocalize.android.hilt")
+    id("vocalize.android.test")
     alias(libs.plugins.kotlin.compose)
 }
 
