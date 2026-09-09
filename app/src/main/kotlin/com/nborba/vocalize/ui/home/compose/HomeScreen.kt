@@ -17,12 +17,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.nborba.vocalize.core.common.util.DefaultEffectHandler
 import com.nborba.vocalize.core.designsystem.component.VocalizeButton
 import com.nborba.vocalize.core.designsystem.component.VocalizeScaffold
 import com.nborba.vocalize.core.designsystem.component.VocalizeTopAppBar
 import com.nborba.vocalize.core.designsystem.theme.spacing
 import com.nborba.vocalize.ui.home.HomeScreenViewModel
+import com.nborba.vocalize.ui.home.model.HomeEffect
+import com.nborba.vocalize.ui.home.model.HomeEffect.NavigateToDetail
+import com.nborba.vocalize.ui.home.model.HomeEffect.NavigateToRecorder
 import com.nborba.vocalize.ui.home.model.HomeUiState
+import kotlinx.coroutines.flow.Flow
 import kotlin.random.Random
 
 @Composable
@@ -34,11 +39,37 @@ internal fun HomeScreen(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
+    EffectHandler(
+        effectFlow = viewModel.effects,
+        onNavigateToRecorder = onNavigateToRecorder,
+        onNavigateToDetail = onNavigateToDetail,
+        onEffectConsumed = viewModel::onEventHandled,
+    )
+
     HomeContent(
         state = state,
         modifier = modifier,
-        onNavigateToDetail = onNavigateToDetail,
-        onNavigateToRecorder = onNavigateToRecorder,
+        onNavigateToDetail = viewModel::onDetailItemClick,
+        onNavigateToRecorder = viewModel::onRecordButtonClick,
+    )
+}
+
+@Composable
+private fun EffectHandler(
+    effectFlow: Flow<HomeEffect?>,
+    onNavigateToRecorder: () -> Unit,
+    onNavigateToDetail: (String) -> Unit,
+    onEffectConsumed: () -> Unit,
+) {
+    DefaultEffectHandler(
+        effectFlow = effectFlow,
+        onEffect = { effect ->
+            when (effect) {
+                NavigateToRecorder -> onNavigateToRecorder()
+                is NavigateToDetail -> onNavigateToDetail(effect.id)
+            }
+        },
+        onConsumeEffect = onEffectConsumed,
     )
 }
 
