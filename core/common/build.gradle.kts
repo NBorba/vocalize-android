@@ -1,3 +1,6 @@
+import org.gradle.kotlin.dsl.testFixturesApi
+import org.gradle.kotlin.dsl.testFixturesImplementation
+
 plugins {
     id("vocalize.android.library")
     id("vocalize.android.hilt")
@@ -10,6 +13,9 @@ android {
     buildFeatures {
         compose = true
     }
+    testFixtures {
+        enable = true
+    }
 }
 
 dependencies {
@@ -17,4 +23,9 @@ dependencies {
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.lifecycle.runtime.compose)
+
+    testFixturesApi(libs.junit.jupiter)
+    testFixturesApi(libs.kotlinx.coroutines.test)
+    testFixturesImplementation(platform(libs.androidx.compose.bom))
+    testFixturesImplementation(libs.androidx.compose.runtime)
 }
