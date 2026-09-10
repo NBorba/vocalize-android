@@ -5,6 +5,7 @@ import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import com.nborba.vocalize.DetailUiStateFixture
 import com.nborba.vocalize.core.designsystem.theme.VocalizeTheme
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -16,20 +17,18 @@ class DetailScreenTest {
 
     @Test
     fun verifyDetailScreenContentIsDisplayed() {
-        val testId = "42"
-
         composeTestRule.setContent {
             VocalizeTheme {
-                DetailScreen(
-                    id = testId,
+                DetailContent(
+                    uiState = DetailUiStateFixture.default(),
                     onUpClick = {},
                     onBackClick = {},
                 )
             }
         }
 
-        composeTestRule.onNodeWithText("Detail #42").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Viewing detail").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Detail #1").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Viewing Detail").assertIsDisplayed()
         composeTestRule.onNodeWithText("Go back").assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Back").assertIsDisplayed()
     }
@@ -40,8 +39,8 @@ class DetailScreenTest {
 
         composeTestRule.setContent {
             VocalizeTheme {
-                DetailScreen(
-                    id = "100",
+                DetailContent(
+                    uiState = DetailUiStateFixture.default(),
                     onUpClick = { upClicked = true },
                     onBackClick = {},
                 )
@@ -59,8 +58,8 @@ class DetailScreenTest {
 
         composeTestRule.setContent {
             VocalizeTheme {
-                DetailScreen(
-                    id = "100",
+                DetailContent(
+                    uiState = DetailUiStateFixture.default(),
                     onUpClick = {},
                     onBackClick = { backClicked = true },
                 )

@@ -73,7 +73,7 @@ private fun EffectHandler(
 }
 
 @Composable
-private fun DetailContent(
+internal fun DetailContent(
     modifier: Modifier = Modifier,
     uiState: DetailUiState,
     onUpClick: () -> Unit,
