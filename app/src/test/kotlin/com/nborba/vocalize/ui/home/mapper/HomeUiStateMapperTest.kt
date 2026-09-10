@@ -19,7 +19,7 @@ internal class HomeUiStateMapperTest {
     private val mapper = HomeUiStateMapper(stringProvider)
 
     @Test
-    fun `invoke maps localized strings to HomeUiState and null effect`() {
+    fun `invoke maps localized strings to HomeUiState with null effect`() {
         val state = mapper()
 
         assertEquals("Vocalize", state.title)

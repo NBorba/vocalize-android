@@ -19,7 +19,7 @@ internal class DetailUiStateMapperTest {
     private val mapper = DetailUiStateMapper(stringProvider)
 
     @Test
-    fun `invoke maps localized strings to HomeUiState and null effect`() {
+    fun `invoke maps localized strings to HomeUiState with null effect`() {
         val state = mapper(id = TEST_ID)
 
         assertEquals("Detail #1", state.title)
