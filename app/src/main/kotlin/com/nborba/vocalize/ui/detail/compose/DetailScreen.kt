@@ -11,40 +11,78 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.nborba.vocalize.core.common.util.DefaultEffectHandler
 import com.nborba.vocalize.core.designsystem.component.VocalizeButton
 import com.nborba.vocalize.core.designsystem.component.VocalizeScaffold
 import com.nborba.vocalize.core.designsystem.component.VocalizeTopAppBar
 import com.nborba.vocalize.core.designsystem.theme.spacing
+import com.nborba.vocalize.ui.detail.DetailScreenViewModel
+import com.nborba.vocalize.ui.detail.model.DetailEffect
+import com.nborba.vocalize.ui.detail.model.DetailEffect.NavigateBack
+import com.nborba.vocalize.ui.detail.model.DetailEffect.NavigateUp
+import com.nborba.vocalize.ui.detail.model.DetailUiState
+import kotlinx.coroutines.flow.Flow
 
 @Composable
 internal fun DetailScreen(
     modifier: Modifier = Modifier,
-    id: String,
-    onUpClick: () -> Unit,
-    onBackClick: () -> Unit,
+    viewModel: DetailScreenViewModel = hiltViewModel(),
+    onNavigateBack: () -> Unit,
+    onNavigateUp: () -> Unit,
 ) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    EffectHandler(
+        effectFlow = viewModel.effects,
+        onNavigateBack = onNavigateBack,
+        onNavigateUp = onNavigateUp,
+        onConsumeEffect = viewModel::onEffectConsumed,
+    )
+
     DetailContent(
         modifier = modifier,
-        id = id,
-        onUpClick = onUpClick,
-        onBackClick = onBackClick,
+        uiState = uiState,
+        onBackClick = viewModel::onBackClick,
+        onUpClick = viewModel::onUpClick,
     )
 }
 
 @Composable
-private fun DetailContent(
+private fun EffectHandler(
+    effectFlow: Flow<DetailEffect?>,
+    onNavigateBack: () -> Unit,
+    onNavigateUp: () -> Unit,
+    onConsumeEffect: () -> Unit,
+) {
+    DefaultEffectHandler(
+        effectFlow = effectFlow,
+        onEffect = { effect ->
+            when (effect) {
+                NavigateBack -> onNavigateBack()
+                NavigateUp -> onNavigateUp()
+            }
+        },
+        onConsumeEffect = onConsumeEffect,
+    )
+}
+
+@Composable
+internal fun DetailContent(
     modifier: Modifier = Modifier,
-    id: String,
+    uiState: DetailUiState,
     onUpClick: () -> Unit,
     onBackClick: () -> Unit,
 ) {
     VocalizeScaffold(
         topBar = {
             VocalizeTopAppBar(
-                title = "Detail #$id",
+                title = uiState.title,
                 onNavigationClick = onUpClick,
             )
         },
@@ -56,11 +94,11 @@ private fun DetailContent(
                     .padding(MaterialTheme.spacing.medium),
         ) {
             Text(
-                text = "Viewing detail",
+                text = uiState.header,
                 style = MaterialTheme.typography.headlineMedium,
             )
             Spacer(modifier = Modifier.size(MaterialTheme.spacing.small))
-            VocalizeButton(text = "Go back", onClick = onBackClick)
+            VocalizeButton(text = uiState.buttonBack, onClick = onBackClick)
         }
     }
 }
@@ -74,7 +112,12 @@ private fun DetailContentPreview() {
     }
 
     DetailContent(
-        id = "preview",
+        uiState =
+            DetailUiState(
+                title = "Detail #1",
+                header = "Viewing detail",
+                buttonBack = "Go back",
+            ),
         onUpClick = { toast("onUpClick") },
         onBackClick = { toast("onBackClick") },
     )

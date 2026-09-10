@@ -1,5 +1,6 @@
 plugins {
     id("vocalize.android.feature")
+    id("vocalize.android.test")
 }
 
 android {

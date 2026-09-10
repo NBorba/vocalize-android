@@ -49,19 +49,18 @@ internal class HomeScreenViewModelTest {
     @Test
     fun `when onDetailItemClick, updates effect to NavigateToDetail`() =
         runTest {
-            val detailId = "42"
             viewModel.effects.test {
                 assertEquals(null, awaitItem())
 
-                viewModel.onDetailItemClick(detailId)
+                viewModel.onDetailItemClick(DETAIL_ID)
 
-                assertEquals(HomeEffect.NavigateToDetail(detailId), awaitItem())
+                assertEquals(HomeEffect.NavigateToDetail(DETAIL_ID), awaitItem())
                 cancelAndIgnoreRemainingEvents()
             }
         }
 
     @Test
-    fun `when onEffectHandled, clears effect`() =
+    fun `when onEffectConsumed, clears effect`() =
         runTest {
             viewModel.effects.test {
                 assertEquals(null, awaitItem())
@@ -69,10 +68,14 @@ internal class HomeScreenViewModelTest {
                 viewModel.onRecordButtonClick()
                 assertEquals(HomeEffect.NavigateToRecorder, awaitItem())
 
-                viewModel.onEffectHandled()
+                viewModel.onEffectConsumed()
                 assertEquals(null, awaitItem())
 
                 cancelAndIgnoreRemainingEvents()
             }
         }
+
+    private companion object {
+        const val DETAIL_ID = "detailId"
+    }
 }

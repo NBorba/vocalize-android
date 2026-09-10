@@ -19,6 +19,9 @@ class AndroidTestConventionPlugin : Plugin<Project> {
                             it.useJUnitPlatform()
                         }
                     }
+                    testFixtures {
+                        enable = true
+                    }
                 }
             }
 
@@ -29,6 +32,9 @@ class AndroidTestConventionPlugin : Plugin<Project> {
                             it.useJUnitPlatform()
                         }
                     }
+                    testFixtures {
+                        enable = true
+                    }
                 }
             }
 
@@ -37,6 +43,9 @@ class AndroidTestConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
+                // Common test fixtures
+                testImplementation(testFixtures(project(":core:common")))
+
                 testImplementation(libs.findLibrary("junit").get())
                 testImplementation(libs.findLibrary("junit.jupiter").get())
                 testImplementation(libs.findLibrary("mockk").get())
@@ -51,6 +60,9 @@ class AndroidTestConventionPlugin : Plugin<Project> {
                 androidTestImplementation(libs.findLibrary("androidx.compose.ui.test.junit4").get())
                 androidTestImplementation(libs.findLibrary("androidx.lifecycle.runtime.testing").get())
                 debugImplementation(libs.findLibrary("androidx.compose.ui.test.manifest").get())
+
+                add("testFixturesImplementation", platform(libs.findLibrary("androidx.compose.bom").get()))
+                add("testFixturesImplementation", libs.findLibrary("androidx.compose.runtime").get())
             }
         }
     }

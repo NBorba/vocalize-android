@@ -3,6 +3,7 @@ package com.nborba.vocalize.feature.recorder.impl.ui.recorder.compose
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import com.nborba.vocalize.RecorderUiStateFixture
 import com.nborba.vocalize.core.designsystem.theme.VocalizeTheme
 import org.junit.Rule
 import org.junit.Test
@@ -15,7 +16,9 @@ class RecorderBottomSheetTest {
     fun verifyRecorderScreenContentIsDisplayed() {
         composeTestRule.setContent {
             VocalizeTheme {
-                RecorderBottomSheet()
+                RecorderContent(
+                    uiState = RecorderUiStateFixture.default(),
+                )
             }
         }
 

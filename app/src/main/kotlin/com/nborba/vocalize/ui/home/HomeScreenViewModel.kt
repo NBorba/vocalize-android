@@ -31,7 +31,7 @@ internal class HomeScreenViewModel
             _uiState.update { it.copy(effect = HomeEffect.NavigateToDetail(id)) }
         }
 
-        fun onEffectHandled() {
+        fun onEffectConsumed() {
             _uiState.update { it.copy(effect = null) }
         }
     }

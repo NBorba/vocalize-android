@@ -6,6 +6,7 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertNull
 
 internal class HomeUiStateMapperTest {
     private val stringProvider: StringProvider =
@@ -18,12 +19,13 @@ internal class HomeUiStateMapperTest {
     private val mapper = HomeUiStateMapper(stringProvider)
 
     @Test
-    fun `invoke maps localized strings to HomeUiState`() {
+    fun `invoke maps localized strings to HomeUiState with null effect`() {
         val state = mapper()
 
         assertEquals("Vocalize", state.title)
         assertEquals("Welcome", state.header)
         assertEquals("Details", state.buttonDetails)
         assertEquals("Record", state.buttonRecord)
+        assertNull(state.effect)
     }
 }
