@@ -12,7 +12,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
-import androidx.navigation.toRoute
 import com.nborba.vocalize.feature.recorder.api.navigation.RecorderGraphRoute
 import com.nborba.vocalize.feature.recorder.impl.ui.recorderNavGraph
 import com.nborba.vocalize.navigation.DetailRoute
@@ -52,12 +51,10 @@ internal fun VocalizeApp() {
                         navDeepLink<DetailRoute>(basePath = "https://vocalize.app/detail"),
                         navDeepLink<DetailRoute>(basePath = "vocalize://detail"),
                     ),
-            ) { backStackEntry ->
-                val route: DetailRoute = backStackEntry.toRoute()
+            ) {
                 DetailScreen(
-                    id = route.id,
-                    onUpClick = navController::navigateUp,
-                    onBackClick = navController::popBackStack,
+                    onNavigateBack = navController::popBackStack,
+                    onNavigateUp = navController::navigateUp,
                 )
             }
 
