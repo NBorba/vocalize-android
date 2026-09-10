@@ -25,7 +25,7 @@ class VocalizeNavigationTest {
         composeTestRule.onNodeWithText("See details").performClick()
 
         // 3. Verify Detail Screen is displayed
-        composeTestRule.onNodeWithText("Viewing detail").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Viewing Detail").assertIsDisplayed()
 
         // 4. Click TopBar Back Arrow to navigate back to HomeScreen
         composeTestRule.onNodeWithContentDescription("Back").performClick()
