@@ -19,6 +19,9 @@ class AndroidTestConventionPlugin : Plugin<Project> {
                             it.useJUnitPlatform()
                         }
                     }
+                    testFixtures {
+                        enable = true
+                    }
                 }
             }
 
@@ -28,6 +31,9 @@ class AndroidTestConventionPlugin : Plugin<Project> {
                         unitTests.all {
                             it.useJUnitPlatform()
                         }
+                    }
+                    testFixtures {
+                        enable = true
                     }
                 }
             }
@@ -51,6 +57,9 @@ class AndroidTestConventionPlugin : Plugin<Project> {
                 androidTestImplementation(libs.findLibrary("androidx.compose.ui.test.junit4").get())
                 androidTestImplementation(libs.findLibrary("androidx.lifecycle.runtime.testing").get())
                 debugImplementation(libs.findLibrary("androidx.compose.ui.test.manifest").get())
+
+                add("testFixturesImplementation", platform(libs.findLibrary("androidx.compose.bom").get()))
+                add("testFixturesImplementation", libs.findLibrary("androidx.compose.runtime").get())
             }
         }
     }
