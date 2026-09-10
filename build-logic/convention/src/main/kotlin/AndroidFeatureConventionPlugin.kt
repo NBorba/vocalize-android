@@ -20,6 +20,9 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 buildFeatures {
                     compose = true
                 }
+                testFixtures {
+                    enable = true
+                }
             }
 
             dependencies {
