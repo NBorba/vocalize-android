@@ -34,6 +34,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 implementation(libs.findLibrary("androidx.compose.ui").get())
                 implementation(libs.findLibrary("androidx.compose.ui.tooling.preview").get())
                 implementation(libs.findLibrary("androidx.hilt.navigation.compose").get())
+                implementation(libs.findLibrary("androidx.lifecycle.runtime.compose").get())
                 implementation(libs.findLibrary("androidx.navigation.compose").get())
                 debugImplementation(libs.findLibrary("androidx.compose.ui.tooling").get())
             }
