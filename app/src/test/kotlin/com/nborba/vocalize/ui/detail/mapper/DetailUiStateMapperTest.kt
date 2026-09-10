@@ -1,8 +1,7 @@
-package com.nborba.vocalize.ui.detail
+package com.nborba.vocalize.ui.detail.mapper
 
 import com.nborba.vocalize.R
 import com.nborba.vocalize.core.common.util.StringProvider
-import com.nborba.vocalize.ui.detail.mapper.DetailUiStateMapper
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals

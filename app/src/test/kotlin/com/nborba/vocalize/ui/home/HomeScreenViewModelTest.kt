@@ -61,7 +61,7 @@ internal class HomeScreenViewModelTest {
         }
 
     @Test
-    fun `when onEffectHandled, clears effect`() =
+    fun `when onEffectConsumed, clears effect`() =
         runTest {
             viewModel.effects.test {
                 assertEquals(null, awaitItem())
