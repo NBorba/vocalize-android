@@ -1,4 +1,4 @@
-package com.nborba.vocalize.ui.detail.mapper
+package com.nborba.vocalize.ui.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
@@ -6,7 +6,7 @@ import app.cash.turbine.test
 import com.nborba.vocalize.DetailUiStateFixture
 import com.nborba.vocalize.core.common.util.MainDispatcherExtension
 import com.nborba.vocalize.navigation.DetailRoute
-import com.nborba.vocalize.ui.detail.DetailScreenViewModel
+import com.nborba.vocalize.ui.detail.mapper.DetailUiStateMapper
 import com.nborba.vocalize.ui.detail.model.DetailEffect
 import io.mockk.every
 import io.mockk.mockk
