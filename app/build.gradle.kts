@@ -72,5 +72,4 @@ dependencies {
 
     // Debug & Testing
     debugImplementation(libs.androidx.compose.ui.tooling)
-    testImplementation(testFixtures(project(":core:common")))
 }

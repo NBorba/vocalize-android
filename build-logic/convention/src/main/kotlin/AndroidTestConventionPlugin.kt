@@ -43,6 +43,9 @@ class AndroidTestConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
+                // Common test fixtures
+                testImplementation(testFixtures(project(":core:common")))
+
                 testImplementation(libs.findLibrary("junit").get())
                 testImplementation(libs.findLibrary("junit.jupiter").get())
                 testImplementation(libs.findLibrary("mockk").get())
