@@ -69,7 +69,7 @@ internal class HomeScreenViewModelTest {
                 viewModel.onRecordButtonClick()
                 assertEquals(HomeEffect.NavigateToRecorder, awaitItem())
 
-                viewModel.onEffectHandled()
+                viewModel.onEffectConsumed()
                 assertEquals(null, awaitItem())
 
                 cancelAndIgnoreRemainingEvents()
