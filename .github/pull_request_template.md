@@ -1,5 +1,6 @@
 ## Description
 <!-- Provide a brief description of the changes introduced by this pull request. -->
+@coderabbitai summary
 
 ## Type of Change
 - [ ] Bug fix (non-breaking change which fixes an issue)
