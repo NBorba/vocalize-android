@@ -34,7 +34,7 @@ fun DefaultPermissionSettingsDialog(
         text = { Text(text = content.description) },
         confirmButton = {
             VocalizeTextButton(
-                text = stringResource(R.string.settings_dialog_confirm_cta),
+                text = stringResource(R.string.permission_settings_confirm_button),
                 onClick = {
                     onConfirm()
                     context.openAppSettings()

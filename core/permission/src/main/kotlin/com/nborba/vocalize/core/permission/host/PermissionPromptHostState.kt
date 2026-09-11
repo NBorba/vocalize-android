@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
 import com.nborba.vocalize.core.common.util.findActivity
 import com.nborba.vocalize.core.common.util.openAppSettings
+import com.nborba.vocalize.core.permission.R
 import com.nborba.vocalize.core.permission.model.PermissionPromptContent
 import com.nborba.vocalize.core.permission.util.hasPermission
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -212,16 +213,16 @@ class PermissionPromptHostState internal constructor() {
     private fun createDefaultRationaleContent(permissions: List<String>): PermissionPromptContent {
         val name = formatPermissionNames(permissions)
         return PermissionPromptContent(
-            title = "$name Permission Required",
-            description = "This feature requires $name permission to function properly.",
+            title = context.getString(R.string.permission_rationale_title, name),
+            description = context.getString(R.string.permission_rationale_description, name),
         )
     }
 
     private fun createDefaultSettingsContent(permissions: List<String>): PermissionPromptContent {
         val name = formatPermissionNames(permissions)
         return PermissionPromptContent(
-            title = "$name Permission Denied",
-            description = "$name permission is permanently disabled. Please enable $name in System Settings.",
+            title = context.getString(R.string.permission_settings_title, name),
+            description = context.getString(R.string.permission_settings_description, name),
         )
     }
 
