@@ -28,5 +28,6 @@ rootProject.name = "Vocalize"
 include(":app")
 include(":core:common")
 include(":core:designsystem")
+include(":core:permission")
 include(":feature:recorder-api")
 include(":feature:recorder-impl")
