@@ -182,7 +182,7 @@ internal class PermissionPromptHostStateTest {
         }
 
     @Test
-    fun `when permission was previously permanently denied before launch, skips system launcher and shows Settings prompt`() =
+    fun `when permission previously permanently denied before launch, skips system launcher and shows Settings UI`() =
         runTest(mainDispatcherExtension.testDispatcher) {
             var callCount = 0
             hostState.systemLauncher = { _, callback ->
