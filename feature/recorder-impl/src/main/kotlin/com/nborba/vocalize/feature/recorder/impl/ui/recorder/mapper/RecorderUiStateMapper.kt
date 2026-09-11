@@ -13,5 +13,6 @@ internal class RecorderUiStateMapper
         operator fun invoke(): RecorderUiState =
             RecorderUiState(
                 title = stringProvider.getString(R.string.recorder_title),
+                buttonRecord = "Record",
             )
     }
