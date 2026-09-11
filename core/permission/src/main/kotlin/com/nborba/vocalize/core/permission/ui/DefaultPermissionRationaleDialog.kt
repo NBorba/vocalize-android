@@ -7,18 +7,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.nborba.vocalize.core.designsystem.R
 import com.nborba.vocalize.core.designsystem.component.VocalizeTextButton
-import com.nborba.vocalize.core.permission.model.PermissionDialogContent
+import com.nborba.vocalize.core.permission.model.PermissionPromptContent
 
 /**
  * Material 3 dialog displaying permission rationale text before re-requesting a permission.
  *
- * @param content Title and description text for the dialog.
+ * @param content Permission prompt content containing title and description.
  * @param onDismiss Callback invoked when the dialog is dismissed or canceled.
  * @param onConfirm Callback invoked when the user confirms and requests the permission.
  */
 @Composable
-fun PermissionRationaleDialog(
-    content: PermissionDialogContent,
+fun DefaultPermissionRationaleDialog(
+    content: PermissionPromptContent,
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
     modifier: Modifier = Modifier,

@@ -9,22 +9,22 @@ import androidx.compose.ui.res.stringResource
 import com.nborba.vocalize.core.common.util.openAppSettings
 import com.nborba.vocalize.core.designsystem.component.VocalizeTextButton
 import com.nborba.vocalize.core.permission.R
-import com.nborba.vocalize.core.permission.model.PermissionDialogContent
+import com.nborba.vocalize.core.permission.model.PermissionPromptContent
 import com.nborba.vocalize.core.designsystem.R as DSR
 
 /**
  * Material 3 dialog prompting the user to open System Settings for permanently denied permissions.
  *
- * @param content Title and description text for the dialog.
+ * @param content Permission prompt content containing title and description.
  * @param onDismiss Callback invoked when the dialog is dismissed.
- * @param onOpenSettings Optional callback invoked prior to launching system settings.
+ * @param onConfirm Callback invoked when the dialog is confirmed.
  */
 @Composable
-fun PermissionSettingsDialog(
-    content: PermissionDialogContent,
+fun DefaultPermissionSettingsDialog(
+    content: PermissionPromptContent,
     onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
     modifier: Modifier = Modifier,
-    onOpenSettings: () -> Unit = {},
 ) {
     val context = LocalContext.current
 
@@ -36,7 +36,7 @@ fun PermissionSettingsDialog(
             VocalizeTextButton(
                 text = stringResource(R.string.settings_dialog_confirm_cta),
                 onClick = {
-                    onOpenSettings()
+                    onConfirm()
                     context.openAppSettings()
                 },
             )

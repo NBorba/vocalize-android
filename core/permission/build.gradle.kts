@@ -1,6 +1,7 @@
 plugins {
     id("vocalize.android.library")
     id("vocalize.android.compose")
+    id("vocalize.android.hilt")
     id("vocalize.android.test")
 }
 
