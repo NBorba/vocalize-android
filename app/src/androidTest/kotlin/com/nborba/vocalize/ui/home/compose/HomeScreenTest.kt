@@ -2,6 +2,7 @@ package com.nborba.vocalize.ui.home.compose
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.nborba.vocalize.HomeUiStateFixture
@@ -35,7 +36,7 @@ class HomeScreenTest {
             .assertIsDisplayed()
 
         // Floating Action Record Button
-        composeTestRule.onNodeWithText("Record").assertIsDisplayed()
+        composeTestRule.onNodeWithTag(HOME_RECORD_FAB_TEST_TAG).assertIsDisplayed()
     }
 
     @Test
@@ -53,7 +54,7 @@ class HomeScreenTest {
             }
         }
 
-        composeTestRule.onNodeWithText("Record").performClick()
+        composeTestRule.onNodeWithTag(HOME_RECORD_FAB_TEST_TAG).performClick()
 
         assertTrue("Expected onRecordButtonClick callback to be invoked", callbackCalled)
     }

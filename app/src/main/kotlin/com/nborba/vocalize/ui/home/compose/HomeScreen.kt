@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.fromHtml
 import androidx.compose.ui.text.style.TextAlign
@@ -56,6 +57,8 @@ internal fun HomeScreen(
     )
 }
 
+const val HOME_RECORD_FAB_TEST_TAG = "home_record_fab"
+
 @Composable
 internal fun HomeContent(
     state: HomeUiState,
@@ -69,6 +72,7 @@ internal fun HomeContent(
                 icon = VocalizeIcons.Record,
                 text = state.buttonRecord,
                 onClick = onRecordButtonClick,
+                modifier = Modifier.testTag(HOME_RECORD_FAB_TEST_TAG),
             )
         },
     ) { _ ->
