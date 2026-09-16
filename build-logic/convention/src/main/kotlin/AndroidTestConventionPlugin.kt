@@ -56,6 +56,7 @@ class AndroidTestConventionPlugin : Plugin<Project> {
 
                 androidTestImplementation(platform(libs.findLibrary("androidx.compose.bom").get()))
                 androidTestImplementation(libs.findLibrary("androidx.junit").get())
+                androidTestImplementation(libs.findLibrary("androidx.test.rules").get())
                 androidTestImplementation(libs.findLibrary("androidx.espresso.core").get())
                 androidTestImplementation(libs.findLibrary("androidx.compose.ui.test.junit4").get())
                 androidTestImplementation(libs.findLibrary("androidx.lifecycle.runtime.testing").get())

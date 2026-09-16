@@ -6,3 +6,7 @@ plugins {
 android {
     namespace = "com.nborba.vocalize.core.designsystem"
 }
+
+dependencies {
+    implementation(libs.androidx.compose.material.icons.extended)
+}

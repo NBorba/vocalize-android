@@ -29,8 +29,7 @@ internal class HomeScreenViewModelTest {
 
     @Test
     fun `initial state is correctly set from mapper`() {
-        assertEquals("Vocalize", viewModel.uiState.value.title)
-        assertEquals("Welcome to the app!", viewModel.uiState.value.header)
+        assertEquals(HomeUiStateFixture.default(), viewModel.uiState.value)
     }
 
     @Test
@@ -42,19 +41,6 @@ internal class HomeScreenViewModelTest {
                 viewModel.onRecordButtonClick()
 
                 assertEquals(HomeEffect.NavigateToRecorder, awaitItem())
-                cancelAndIgnoreRemainingEvents()
-            }
-        }
-
-    @Test
-    fun `when onDetailItemClick, updates effect to NavigateToDetail`() =
-        runTest {
-            viewModel.effects.test {
-                assertEquals(null, awaitItem())
-
-                viewModel.onDetailItemClick(DETAIL_ID)
-
-                assertEquals(HomeEffect.NavigateToDetail(DETAIL_ID), awaitItem())
                 cancelAndIgnoreRemainingEvents()
             }
         }
@@ -74,8 +60,4 @@ internal class HomeScreenViewModelTest {
                 cancelAndIgnoreRemainingEvents()
             }
         }
-
-    private companion object {
-        const val DETAIL_ID = "detailId"
-    }
 }

@@ -8,5 +8,6 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:permission"))
     implementation(project(":feature:recorder-api"))
 }

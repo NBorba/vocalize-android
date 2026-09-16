@@ -2,6 +2,7 @@ package com.nborba.vocalize.ui.home.compose
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.nborba.vocalize.HomeUiStateFixture
@@ -20,39 +21,22 @@ class HomeScreenTest {
             VocalizeTheme {
                 HomeContent(
                     state = HomeUiStateFixture.default(),
-                    onNavigateToDetail = {},
-                    onNavigateToRecorder = {},
+                    onRecordButtonClick = {},
                 )
             }
         }
 
+        // TopAppBar Title
         composeTestRule.onNodeWithText("Vocalize").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Welcome to the app!").assertIsDisplayed()
-        composeTestRule.onNodeWithText("See details").assertIsDisplayed()
-    }
 
-    @Test
-    fun clickingSeeDetailsButton_triggersCallback() {
-        var callbackCalled = false
-        var capturedId: String? = null
+        // Empty State Title & Description
+        composeTestRule.onNodeWithText("No recordings yet").assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText("Tap Record below to start your first recording.", substring = true)
+            .assertIsDisplayed()
 
-        composeTestRule.setContent {
-            VocalizeTheme {
-                HomeContent(
-                    state = HomeUiStateFixture.default(),
-                    onNavigateToDetail = { id ->
-                        callbackCalled = true
-                        capturedId = id
-                    },
-                    onNavigateToRecorder = {},
-                )
-            }
-        }
-
-        composeTestRule.onNodeWithText("See details").performClick()
-
-        assertTrue("Expected onNavigateToDetail callback to be invoked", callbackCalled)
-        assertTrue("Expected captured ID to not be empty", !capturedId.isNullOrEmpty())
+        // Floating Action Record Button
+        composeTestRule.onNodeWithTag(HOME_RECORD_FAB_TEST_TAG).assertIsDisplayed()
     }
 
     @Test
@@ -63,16 +47,15 @@ class HomeScreenTest {
             VocalizeTheme {
                 HomeContent(
                     state = HomeUiStateFixture.default(),
-                    onNavigateToDetail = {},
-                    onNavigateToRecorder = {
+                    onRecordButtonClick = {
                         callbackCalled = true
                     },
                 )
             }
         }
 
-        composeTestRule.onNodeWithText("Record").performClick()
+        composeTestRule.onNodeWithTag(HOME_RECORD_FAB_TEST_TAG).performClick()
 
-        assertTrue("Expected onNavigateToRecorder callback to be invoked", callbackCalled)
+        assertTrue("Expected onRecordButtonClick callback to be invoked", callbackCalled)
     }
 }

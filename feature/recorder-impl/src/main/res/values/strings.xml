@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="recorder_title">Recorder</string>
+    <string name="recorder_recording_saved">Recording has been saved</string>
 </resources>
