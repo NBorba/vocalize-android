@@ -177,7 +177,7 @@ class PermissionPromptHostState internal constructor() {
 
     private suspend fun showRationalePrompt(content: PermissionPromptContent): Boolean =
         suspendCancellableCoroutine { continuation ->
-            currentPrompt =
+            val prompt =
                 PermissionPrompt.Rationale(
                     content = content,
                     onConfirm = {
@@ -189,11 +189,17 @@ class PermissionPromptHostState internal constructor() {
                         continuation.resume(false)
                     },
                 )
+            currentPrompt = prompt
+            continuation.invokeOnCancellation {
+                if (currentPrompt === prompt) {
+                    dismissPrompt()
+                }
+            }
         }
 
     private suspend fun showSettingsPrompt(content: PermissionPromptContent): PermissionResult {
         suspendCancellableCoroutine { continuation ->
-            currentPrompt =
+            val prompt =
                 PermissionPrompt.Settings(
                     content = content,
                     onConfirm = {
@@ -206,6 +212,12 @@ class PermissionPromptHostState internal constructor() {
                         continuation.resume(Unit)
                     },
                 )
+            currentPrompt = prompt
+            continuation.invokeOnCancellation {
+                if (currentPrompt === prompt) {
+                    dismissPrompt()
+                }
+            }
         }
         return PermissionResult.DeniedPermanently
     }

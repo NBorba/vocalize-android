@@ -239,6 +239,36 @@ internal class PermissionPromptHostStateTest {
         }
 
     @Test
+    fun `when request is cancelled while rationale prompt is showing, clears currentPrompt`() =
+        runTest(mainDispatcherExtension.testDispatcher) {
+            every { ActivityCompat.shouldShowRequestPermissionRationale(activity, PERMISSION) } returns true
+
+            val job = launch { hostState.requestPermission(PERMISSION) }
+
+            val prompt = hostState.currentPrompt
+            assertEquals(PermissionPrompt.Rationale::class, prompt!!::class)
+
+            job.cancel()
+
+            assertNull(hostState.currentPrompt)
+        }
+
+    @Test
+    fun `when request is cancelled while settings prompt is showing, clears currentPrompt`() =
+        runTest(mainDispatcherExtension.testDispatcher) {
+            val job = launch { hostState.requestPermission(PERMISSION) }
+
+            launcherCallback?.invoke(mapOf(PERMISSION to false))
+
+            val prompt = hostState.currentPrompt
+            assertEquals(PermissionPrompt.Settings::class, prompt!!::class)
+
+            job.cancel()
+
+            assertNull(hostState.currentPrompt)
+        }
+
+    @Test
     fun `dismissPrompt clears active prompt`() {
         hostState.currentPrompt = PermissionPrompt.Rationale(mockk(), {}, {})
 
