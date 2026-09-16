@@ -19,8 +19,10 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nborba.vocalize.core.common.util.DefaultEffectHandler
 import com.nborba.vocalize.core.designsystem.component.VocalizeButton
+import com.nborba.vocalize.core.designsystem.component.VocalizeExtendedFloatingActionButton
 import com.nborba.vocalize.core.designsystem.component.VocalizeScaffold
 import com.nborba.vocalize.core.designsystem.component.VocalizeTopAppBar
+import com.nborba.vocalize.core.designsystem.icon.VocalizeIcons
 import com.nborba.vocalize.core.designsystem.theme.spacing
 import com.nborba.vocalize.ui.home.HomeScreenViewModel
 import com.nborba.vocalize.ui.home.model.HomeEffect
@@ -84,6 +86,13 @@ internal fun HomeContent(
         topBar = {
             VocalizeTopAppBar(title = state.title)
         },
+        floatingActionButton = {
+            VocalizeExtendedFloatingActionButton(
+                icon = VocalizeIcons.RecordCircle,
+                text = state.buttonRecord,
+                onClick = { onNavigateToRecorder() },
+            )
+        },
     ) { innerPadding ->
         Column(
             modifier =
@@ -99,10 +108,6 @@ internal fun HomeContent(
             VocalizeButton(
                 text = state.buttonDetails,
                 onClick = { onNavigateToDetail(Random.nextInt().toString()) },
-            )
-            VocalizeButton(
-                text = state.buttonRecord,
-                onClick = { onNavigateToRecorder() },
             )
         }
     }
