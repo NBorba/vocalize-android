@@ -42,6 +42,26 @@ class DefaultPermissionSettingsDialogTest {
     }
 
     @Test
+    fun clickingOpenSettingsButton_triggersOnConfirm() {
+        var confirmClicked = false
+        val content = PermissionPromptContent(title = "Title", description = "Description")
+
+        composeTestRule.setContent {
+            VocalizeTheme {
+                DefaultPermissionSettingsDialog(
+                    content = content,
+                    onDismiss = {},
+                    onConfirm = { confirmClicked = true },
+                )
+            }
+        }
+
+        composeTestRule.onNodeWithText("Open Settings").performClick()
+
+        assertTrue("Expected onConfirm callback to be invoked", confirmClicked)
+    }
+
+    @Test
     fun clickingCancelButton_triggersOnDismiss() {
         var dismissClicked = false
         val content = PermissionPromptContent(title = "Title", description = "Description")

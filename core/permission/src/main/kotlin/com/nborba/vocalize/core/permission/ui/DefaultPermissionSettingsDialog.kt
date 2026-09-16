@@ -4,9 +4,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import com.nborba.vocalize.core.common.util.openAppSettings
 import com.nborba.vocalize.core.designsystem.component.VocalizeTextButton
 import com.nborba.vocalize.core.permission.R
 import com.nborba.vocalize.core.permission.model.PermissionPromptContent
@@ -26,8 +24,6 @@ fun DefaultPermissionSettingsDialog(
     onConfirm: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
-
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(text = content.title) },
@@ -35,10 +31,7 @@ fun DefaultPermissionSettingsDialog(
         confirmButton = {
             VocalizeTextButton(
                 text = stringResource(R.string.permission_settings_confirm_button),
-                onClick = {
-                    onConfirm()
-                    context.openAppSettings()
-                },
+                onClick = onConfirm,
             )
         },
         dismissButton = {
