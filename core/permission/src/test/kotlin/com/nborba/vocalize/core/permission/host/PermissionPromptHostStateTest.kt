@@ -207,6 +207,38 @@ internal class PermissionPromptHostStateTest {
         }
 
     @Test
+    fun `concurrent requests are serialized and both complete successfully`() =
+        runTest(mainDispatcherExtension.testDispatcher) {
+            every { ActivityCompat.shouldShowRequestPermissionRationale(activity, PERMISSION) } returns true
+            every { ActivityCompat.shouldShowRequestPermissionRationale(activity, SECOND_PERMISSION) } returns true
+
+            var result1: PermissionResult? = null
+            var result2: PermissionResult? = null
+
+            val job1 = launch { result1 = hostState.requestPermission(PERMISSION) }
+            val job2 = launch { result2 = hostState.requestPermission(SECOND_PERMISSION) }
+
+            // Active prompt belongs to first request
+            val prompt1 = hostState.currentPrompt as PermissionPrompt.Rationale
+            prompt1.onConfirm()
+
+            every { ContextCompat.checkSelfPermission(context, PERMISSION) } returns PackageManager.PERMISSION_GRANTED
+            launcherCallback?.invoke(mapOf(PERMISSION to true))
+
+            assertEquals(PermissionResult.Granted, result1)
+
+            // Mutex released; second request presents its prompt
+            val prompt2 = hostState.currentPrompt as PermissionPrompt.Rationale
+            prompt2.onDismiss()
+
+            assertEquals(PermissionResult.Denied, result2)
+            assertNull(hostState.currentPrompt)
+
+            job1.cancel()
+            job2.cancel()
+        }
+
+    @Test
     fun `dismissPrompt clears active prompt`() {
         hostState.currentPrompt = PermissionPrompt.Rationale(mockk(), {}, {})
 

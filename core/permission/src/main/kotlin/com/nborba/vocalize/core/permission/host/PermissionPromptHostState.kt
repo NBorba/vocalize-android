@@ -18,6 +18,8 @@ import com.nborba.vocalize.core.permission.R
 import com.nborba.vocalize.core.permission.model.PermissionPromptContent
 import com.nborba.vocalize.core.permission.util.hasPermission
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlin.coroutines.resume
 
 /**
@@ -59,6 +61,8 @@ sealed interface PermissionPrompt {
  */
 @Stable
 class PermissionPromptHostState internal constructor() {
+    private val mutex = Mutex()
+
     var currentPrompt by mutableStateOf<PermissionPrompt?>(null)
         internal set
 
@@ -99,40 +103,44 @@ class PermissionPromptHostState internal constructor() {
         permissions: List<String>,
         rationaleContent: PermissionPromptContent? = null,
         settingsContent: PermissionPromptContent? = null,
-    ): PermissionResult {
-        // 1. Return immediately if all permissions are already granted
-        if (permissions.all { context.hasPermission(it) }) {
-            dismissPrompt()
-            return PermissionResult.Granted
+    ): PermissionResult =
+        mutex.withLock {
+            try {
+                // 1. Return immediately if all permissions are already granted
+                if (permissions.all { context.hasPermission(it) }) {
+                    return PermissionResult.Granted
+                }
+
+                val ratContent = rationaleContent ?: createDefaultRationaleContent(permissions)
+                val setContent = settingsContent ?: createDefaultSettingsContent(permissions)
+
+                // 2. Show rationale prompt if required before launching request
+                if (shouldShowRationale(permissions)) {
+                    val confirmed = showRationalePrompt(ratContent)
+                    if (!confirmed) return PermissionResult.Denied
+                }
+
+                // 3. Show settings prompt if previously permanently denied
+                if (isPermanentlyDeniedBeforeLaunch(permissions)) {
+                    return showSettingsPrompt(setContent)
+                }
+
+                // 4. Launch system permission request prompt
+                val result = launchSystemRequest(permissions)
+                if (result.values.all { it }) {
+                    return PermissionResult.Granted
+                }
+
+                // 5. Show settings prompt if system launcher suppressed prompt due to permanent denial
+                if (isPermanentlyDeniedAfterLaunch(permissions)) {
+                    return showSettingsPrompt(setContent)
+                }
+
+                return PermissionResult.Denied
+            } finally {
+                dismissPrompt()
+            }
         }
-
-        val ratContent = rationaleContent ?: createDefaultRationaleContent(permissions)
-        val setContent = settingsContent ?: createDefaultSettingsContent(permissions)
-
-        // 2. Show rationale prompt if required before launching request
-        if (shouldShowRationale(permissions)) {
-            val confirmed = showRationalePrompt(ratContent)
-            if (!confirmed) return PermissionResult.Denied
-        }
-
-        // 3. Show settings prompt if previously permanently denied
-        if (isPermanentlyDeniedBeforeLaunch(permissions)) {
-            return showSettingsPrompt(setContent)
-        }
-
-        // 4. Launch system permission request prompt
-        val result = launchSystemRequest(permissions)
-        if (result.values.all { it }) {
-            return PermissionResult.Granted
-        }
-
-        // 5. Show settings prompt if system launcher suppressed prompt due to permanent denial
-        if (isPermanentlyDeniedAfterLaunch(permissions)) {
-            return showSettingsPrompt(setContent)
-        }
-
-        return PermissionResult.Denied
-    }
 
     /**
      * Dismisses any active rationale or settings prompt.
