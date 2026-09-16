@@ -249,7 +249,7 @@ fun VocalizeExtendedFloatingActionButton(
     ExtendedFloatingActionButton(
         onClick = onClick,
         modifier = modifier,
-        expanded = expanded,
+        expanded = expanded || icon == null,
         shape = shape,
         containerColor = containerColor,
         contentColor = contentColor,
