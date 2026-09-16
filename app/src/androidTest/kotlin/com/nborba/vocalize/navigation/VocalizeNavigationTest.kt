@@ -1,6 +1,7 @@
 package com.nborba.vocalize.navigation
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -24,8 +25,8 @@ class VocalizeNavigationTest {
         // 2. Click "Record" to navigate to Recorder
         composeTestRule.onNodeWithText("Record").performClick()
 
-        // 3. Verify Recorder is displayed
-        composeTestRule.onNodeWithText("Recorder").assertIsDisplayed()
+        // 3. Verify Recorder bottom sheet is displayed (circular main button)
+        composeTestRule.onNode(hasClickAction()).assertIsDisplayed()
 
         // 4. Press back to dismiss
         Espresso.pressBack()
