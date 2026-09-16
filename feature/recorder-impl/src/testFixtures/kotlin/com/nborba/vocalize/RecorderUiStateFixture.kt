@@ -6,5 +6,6 @@ internal object RecorderUiStateFixture {
     fun default(): RecorderUiState =
         RecorderUiState(
             title = "Recorder",
+            buttonRecord = "Record",
         )
 }

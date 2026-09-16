@@ -4,6 +4,7 @@ import com.nborba.vocalize.core.common.util.StringProvider
 import com.nborba.vocalize.feature.recorder.impl.R
 import com.nborba.vocalize.feature.recorder.impl.ui.recorder.model.RecorderUiState
 import javax.inject.Inject
+import com.nborba.vocalize.core.designsystem.R as DSR
 
 internal class RecorderUiStateMapper
     @Inject
@@ -13,6 +14,6 @@ internal class RecorderUiStateMapper
         operator fun invoke(): RecorderUiState =
             RecorderUiState(
                 title = stringProvider.getString(R.string.recorder_title),
-                buttonRecord = "Record",
+                buttonRecord = stringProvider.getString(DSR.string.button_record),
             )
     }
