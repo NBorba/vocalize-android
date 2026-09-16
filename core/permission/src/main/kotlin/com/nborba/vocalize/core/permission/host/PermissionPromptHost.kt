@@ -50,13 +50,15 @@ fun PermissionPromptHost(
             rationaleContent(
                 currentPrompt.content,
                 currentPrompt.onConfirm,
-            ) { hostState.dismissPrompt() }
+                currentPrompt.onDismiss,
+            )
         }
         is PermissionPrompt.Settings -> {
             settingsContent(
                 currentPrompt.content,
                 currentPrompt.onConfirm,
-            ) { hostState.dismissPrompt() }
+                currentPrompt.onDismiss,
+            )
         }
     }
 }

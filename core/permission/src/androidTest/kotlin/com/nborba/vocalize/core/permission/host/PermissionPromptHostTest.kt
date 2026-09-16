@@ -4,8 +4,10 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import com.nborba.vocalize.core.designsystem.theme.VocalizeTheme
 import com.nborba.vocalize.core.permission.model.PermissionPromptContent
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
@@ -63,6 +65,62 @@ class PermissionPromptHostTest {
 
         composeTestRule.onNodeWithText("Settings Title").assertIsDisplayed()
         composeTestRule.onNodeWithText("Settings Description").assertIsDisplayed()
+    }
+
+    @Test
+    fun whenRationalePromptDismissed_forwardsOnDismissCallback() {
+        var dismissInvoked = false
+        val hostState =
+            PermissionPromptHostState().apply {
+                currentPrompt =
+                    PermissionPrompt.Rationale(
+                        content =
+                            PermissionPromptContent(
+                                title = "Title",
+                                description = "Description",
+                            ),
+                        onConfirm = {},
+                        onDismiss = { dismissInvoked = true },
+                    )
+            }
+
+        composeTestRule.setContent {
+            VocalizeTheme {
+                PermissionPromptHost(hostState = hostState)
+            }
+        }
+
+        composeTestRule.onNodeWithText("Cancel").performClick()
+
+        assertTrue("Expected prompt onDismiss to be called", dismissInvoked)
+    }
+
+    @Test
+    fun whenSettingsPromptDismissed_forwardsOnDismissCallback() {
+        var dismissInvoked = false
+        val hostState =
+            PermissionPromptHostState().apply {
+                currentPrompt =
+                    PermissionPrompt.Settings(
+                        content =
+                            PermissionPromptContent(
+                                title = "Title",
+                                description = "Description",
+                            ),
+                        onConfirm = {},
+                        onDismiss = { dismissInvoked = true },
+                    )
+            }
+
+        composeTestRule.setContent {
+            VocalizeTheme {
+                PermissionPromptHost(hostState = hostState)
+            }
+        }
+
+        composeTestRule.onNodeWithText("Cancel").performClick()
+
+        assertTrue("Expected prompt onDismiss to be called", dismissInvoked)
     }
 
     @Test
