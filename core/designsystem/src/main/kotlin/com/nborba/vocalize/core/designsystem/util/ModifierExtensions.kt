@@ -10,7 +10,7 @@ import com.nborba.vocalize.core.designsystem.theme.spacing
 fun Modifier.defaultPadding() = this.padding(MaterialTheme.spacing.medium)
 
 @Composable
-fun Modifier.defaultVerticalPadding() = this.padding(horizontal = MaterialTheme.spacing.medium)
+fun Modifier.defaultVerticalPadding() = this.padding(vertical = MaterialTheme.spacing.medium)
 
 @Composable
 fun Modifier.defaultHorizontalPadding() = this.padding(horizontal = MaterialTheme.spacing.medium)
