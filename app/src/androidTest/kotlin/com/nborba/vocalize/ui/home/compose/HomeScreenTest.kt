@@ -25,8 +25,17 @@ class HomeScreenTest {
             }
         }
 
+        // TopAppBar Title
         composeTestRule.onNodeWithText("Vocalize").assertIsDisplayed()
+
+        // Empty State Title & Description
         composeTestRule.onNodeWithText("No recordings yet").assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText("Tap Record below to start your first recording.", substring = true)
+            .assertIsDisplayed()
+
+        // Floating Action Record Button
+        composeTestRule.onNodeWithText("Record").assertIsDisplayed()
     }
 
     @Test
