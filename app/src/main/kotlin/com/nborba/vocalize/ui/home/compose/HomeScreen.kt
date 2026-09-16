@@ -66,7 +66,7 @@ internal fun HomeContent(
         topBar = { VocalizeTopAppBar(title = state.title) },
         floatingActionButton = {
             VocalizeExtendedFloatingActionButton(
-                icon = VocalizeIcons.RecordCircle,
+                icon = VocalizeIcons.Record,
                 text = state.buttonRecord,
                 onClick = onRecordButtonClick,
             )
@@ -120,7 +120,7 @@ private fun HomeEmptyContent(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Icon(
-            imageVector = VocalizeIcons.RecordCircle,
+            imageVector = VocalizeIcons.Record,
             contentDescription = null, // Decorative empty state icon
             modifier = Modifier.size(64.dp),
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
