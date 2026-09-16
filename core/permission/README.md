@@ -6,11 +6,11 @@ A suspending, Material 3-compatible permission management library for Jetpack Co
 
 ## 🚀 Key Features
 
-* **`PermissionRequestHostState` & `PermissionRequestHost`:** A suspending `requestPermission` API operating with the same pattern as Material 3 `SnackbarHostState` / `SnackbarHost`.
+* **`PermissionPromptHostState` & `PermissionPromptHost`:** A suspending `requestPermission` API operating with the same pattern as Material 3 `SnackbarHostState` / `SnackbarHost`.
 * **Suspend Return Values:** `requestPermission` suspends until the user completes the flow and returns `PermissionResult.Granted`, `PermissionResult.Denied`, or `PermissionResult.DeniedPermanently`.
 * **Automatic Rationale & Settings Dialogs:** Automatically hosts rationale and system settings dialogs when required.
 * **ViewModel & Clean Architecture Support:** Injectable `PermissionChecker` interface for ViewModels, complete with `FakePermissionChecker` for unit tests.
-* **Custom Dialog Slots:** Supports default Material 3 dialogs (`DefaultPermissionRationaleDialog`, `DefaultPermissionSettingsDialog`) or custom composable slots via `PermissionRequestHost`.
+* **Custom Dialog Slots:** Supports default Material 3 dialogs (`DefaultPermissionRationaleDialog`, `DefaultPermissionSettingsDialog`) or custom composable slots via `PermissionPromptHost`.
 
 ---
 
@@ -38,10 +38,10 @@ dependencies {
 @Composable
 fun MicrophoneScreen(viewModel: MicrophoneViewModel = hiltViewModel()) {
     val scope = rememberCoroutineScope()
-    val permissionHostState = rememberPermissionRequestHostState()
+    val permissionHostState = rememberPermissionPromptHostState()
 
-    // Place PermissionRequestHost near your screen root layout
-    PermissionRequestHost(hostState = permissionHostState)
+    // Place PermissionPromptHost near your screen root layout
+    PermissionPromptHost(hostState = permissionHostState)
 
     Button(
         onClick = {
