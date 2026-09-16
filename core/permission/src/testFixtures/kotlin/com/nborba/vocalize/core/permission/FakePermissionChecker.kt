@@ -7,7 +7,7 @@ import com.nborba.vocalize.core.permission.domain.PermissionChecker
  */
 class FakePermissionChecker(
     private val defaultGranted: Boolean = true,
-    private val grantedPermissions: MutableSet<String> = mutableSetOf(),
+    private val permissionStates: MutableMap<String, Boolean> = mutableMapOf(),
 ) : PermissionChecker {
     /**
      * Sets whether a specific [permission] should be reported as granted.
@@ -16,15 +16,10 @@ class FakePermissionChecker(
         permission: String,
         isGranted: Boolean,
     ) {
-        if (isGranted) {
-            grantedPermissions.add(permission)
-        } else {
-            grantedPermissions.remove(permission)
-        }
+        permissionStates[permission] = isGranted
     }
 
-    override fun hasPermission(permission: String): Boolean =
-        if (grantedPermissions.isEmpty()) defaultGranted else grantedPermissions.contains(permission)
+    override fun hasPermission(permission: String): Boolean = permissionStates[permission] ?: defaultGranted
 
     override fun hasAllPermissions(permissions: List<String>): Boolean = permissions.all { hasPermission(it) }
 }

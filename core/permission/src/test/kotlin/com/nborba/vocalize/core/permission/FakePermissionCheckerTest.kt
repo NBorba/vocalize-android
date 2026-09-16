@@ -22,6 +22,16 @@ internal class FakePermissionCheckerTest {
     }
 
     @Test
+    fun `when defaultGranted is true and permission is explicitly revoked, returns false`() {
+        val checker = FakePermissionChecker(defaultGranted = true)
+
+        checker.setPermissionGranted(PERMISSION, isGranted = false)
+
+        assertFalse(checker.hasPermission(PERMISSION))
+        assertTrue(checker.hasPermission(SECOND_PERMISSION))
+    }
+
+    @Test
     fun `when permission explicitly granted or revoked, respects setPermissionGranted`() {
         val checker = FakePermissionChecker(defaultGranted = false)
 
