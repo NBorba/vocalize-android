@@ -31,14 +31,18 @@ PACKAGE_NAME=$(echo "$MODULE_NAME" | tr '-' '_')
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 MODULE_DIR="$PROJECT_ROOT/$PREFIX/$MODULE_NAME"
-PACKAGE_DIR="$MODULE_DIR/src/main/kotlin/com/nborba/vocalize/$PREFIX/$PACKAGE_NAME"
+MAIN_PKG_DIR="$MODULE_DIR/src/main/kotlin/com/nborba/vocalize/$PREFIX/$PACKAGE_NAME"
+TEST_PKG_DIR="$MODULE_DIR/src/test/kotlin/com/nborba/vocalize/$PREFIX/$PACKAGE_NAME"
+ANDROID_TEST_PKG_DIR="$MODULE_DIR/src/androidTest/kotlin/com/nborba/vocalize/$PREFIX/$PACKAGE_NAME"
 
 if [ -d "$MODULE_DIR" ]; then
     echo "Warning: Directory '$PREFIX/$MODULE_NAME' already exists. Skipping directory creation."
 else
     echo "Creating library module ':$PREFIX:$MODULE_NAME'..."
 
-    mkdir -p "$PACKAGE_DIR"
+    mkdir -p "$MAIN_PKG_DIR"
+    mkdir -p "$TEST_PKG_DIR"
+    mkdir -p "$ANDROID_TEST_PKG_DIR"
 
     # Create build.gradle.kts
     cat <<EOF > "$MODULE_DIR/build.gradle.kts"
@@ -54,8 +58,10 @@ dependencies {
 }
 EOF
 
-    # Create .gitkeep in package directory
-    touch "$PACKAGE_DIR/.gitkeep"
+    # Create .gitkeep in package directories
+    touch "$MAIN_PKG_DIR/.gitkeep"
+    touch "$TEST_PKG_DIR/.gitkeep"
+    touch "$ANDROID_TEST_PKG_DIR/.gitkeep"
 fi
 
 # Update settings.gradle.kts if not already included

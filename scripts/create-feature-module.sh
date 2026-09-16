@@ -27,13 +27,13 @@ SETTINGS_FILE="$PROJECT_ROOT/settings.gradle.kts"
 # 1. Create -api module
 API_MODULE_NAME="${BASE_NAME}-api"
 API_DIR="$PROJECT_ROOT/feature/$API_MODULE_NAME"
-API_PKG_DIR="$API_DIR/src/main/kotlin/com/nborba/vocalize/feature/$PKG_BASE/api"
+API_MAIN_PKG_DIR="$API_DIR/src/main/kotlin/com/nborba/vocalize/feature/$PKG_BASE/api"
 
 if [ -d "$API_DIR" ]; then
     echo "Warning: Directory 'feature/$API_MODULE_NAME' already exists. Skipping API module creation."
 else
     echo "Creating feature API module ':feature:$API_MODULE_NAME'..."
-    mkdir -p "$API_PKG_DIR"
+    mkdir -p "$API_MAIN_PKG_DIR"
 
     cat <<EOF > "$API_DIR/build.gradle.kts"
 plugins {
@@ -48,7 +48,7 @@ dependencies {
 }
 EOF
 
-    touch "$API_PKG_DIR/.gitkeep"
+    touch "$API_MAIN_PKG_DIR/.gitkeep"
 fi
 
 API_INCLUDE="include(\":feature:$API_MODULE_NAME\")"
@@ -60,13 +60,17 @@ fi
 # 2. Create -impl module
 IMPL_MODULE_NAME="${BASE_NAME}-impl"
 IMPL_DIR="$PROJECT_ROOT/feature/$IMPL_MODULE_NAME"
-IMPL_PKG_DIR="$IMPL_DIR/src/main/kotlin/com/nborba/vocalize/feature/$PKG_BASE/impl"
+IMPL_MAIN_PKG_DIR="$IMPL_DIR/src/main/kotlin/com/nborba/vocalize/feature/$PKG_BASE/impl"
+IMPL_TEST_PKG_DIR="$IMPL_DIR/src/test/kotlin/com/nborba/vocalize/feature/$PKG_BASE/impl"
+IMPL_ANDROID_TEST_PKG_DIR="$IMPL_DIR/src/androidTest/kotlin/com/nborba/vocalize/feature/$PKG_BASE/impl"
 
 if [ -d "$IMPL_DIR" ]; then
     echo "Warning: Directory 'feature/$IMPL_MODULE_NAME' already exists. Skipping IMPL module creation."
 else
     echo "Creating feature IMPL module ':feature:$IMPL_MODULE_NAME'..."
-    mkdir -p "$IMPL_PKG_DIR"
+    mkdir -p "$IMPL_MAIN_PKG_DIR"
+    mkdir -p "$IMPL_TEST_PKG_DIR"
+    mkdir -p "$IMPL_ANDROID_TEST_PKG_DIR"
 
     cat <<EOF > "$IMPL_DIR/build.gradle.kts"
 plugins {
@@ -82,7 +86,9 @@ dependencies {
 }
 EOF
 
-    touch "$IMPL_PKG_DIR/.gitkeep"
+    touch "$IMPL_MAIN_PKG_DIR/.gitkeep"
+    touch "$IMPL_TEST_PKG_DIR/.gitkeep"
+    touch "$IMPL_ANDROID_TEST_PKG_DIR/.gitkeep"
 fi
 
 IMPL_INCLUDE="include(\":feature:$IMPL_MODULE_NAME\")"

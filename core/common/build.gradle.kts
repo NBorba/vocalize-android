@@ -2,22 +2,17 @@ import org.gradle.kotlin.dsl.testFixturesApi
 
 plugins {
     id("vocalize.android.library")
+    id("vocalize.android.compose")
     id("vocalize.android.hilt")
     id("vocalize.android.test")
-    alias(libs.plugins.kotlin.compose)
 }
 
 android {
     namespace = "com.nborba.vocalize.core.common"
-
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
     // AndroidX & Compose
-    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.lifecycle.runtime.compose)
 

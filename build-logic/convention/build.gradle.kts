@@ -18,6 +18,10 @@ dependencies {
 
 gradlePlugin {
     plugins {
+        register("androidCompose") {
+            id = "vocalize.android.compose"
+            implementationClass = "com.nborba.vocalize.conventions.AndroidComposeConventionPlugin"
+        }
         register("androidLibrary") {
             id = "vocalize.android.library"
             implementationClass = "com.nborba.vocalize.conventions.AndroidLibraryConventionPlugin"
