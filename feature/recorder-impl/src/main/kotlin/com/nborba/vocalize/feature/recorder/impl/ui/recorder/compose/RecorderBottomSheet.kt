@@ -17,6 +17,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -104,6 +105,8 @@ private fun EffectHandler(
     )
 }
 
+const val RECORDER_MAIN_BUTTON_TEST_TAG = "recorder_main_button"
+
 @Composable
 internal fun RecorderContent(
     uiState: RecorderUiState,
@@ -123,6 +126,7 @@ internal fun RecorderContent(
         VocalizeCircularButton(
             icon = uiState.mainButtonIcon,
             onClick = onMainButtonClick,
+            modifier = Modifier.testTag(RECORDER_MAIN_BUTTON_TEST_TAG),
         )
     }
 }
