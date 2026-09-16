@@ -2,8 +2,10 @@ package com.nborba.vocalize.feature.recorder.impl.ui.recorder
 
 import android.Manifest
 import androidx.lifecycle.ViewModel
+import com.nborba.vocalize.core.common.util.StringProvider
 import com.nborba.vocalize.core.permission.domain.PermissionChecker
 import com.nborba.vocalize.core.permission.host.PermissionResult
+import com.nborba.vocalize.feature.recorder.impl.R
 import com.nborba.vocalize.feature.recorder.impl.ui.recorder.model.RecorderEffect
 import com.nborba.vocalize.feature.recorder.impl.ui.recorder.model.RecorderState
 import com.nborba.vocalize.feature.recorder.impl.ui.recorder.model.RecorderUiState
@@ -20,6 +22,7 @@ internal class RecorderBottomSheetViewModel
     @Inject
     constructor(
         private val permissionChecker: PermissionChecker,
+        private val stringProvider: StringProvider,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow(RecorderUiState())
         val uiState: StateFlow<RecorderUiState> = _uiState.asStateFlow()
@@ -43,7 +46,14 @@ internal class RecorderBottomSheetViewModel
                 _uiState.update { it.copy(effect = RecorderEffect.Dismiss()) }
             } else {
                 stopRecording()
-                _uiState.update { it.copy(effect = RecorderEffect.Dismiss("Recording saved")) }
+                _uiState.update {
+                    it.copy(
+                        effect =
+                            RecorderEffect.Dismiss(
+                                stringProvider.getString(R.string.recorder_recording_saved),
+                            ),
+                    )
+                }
             }
         }
 

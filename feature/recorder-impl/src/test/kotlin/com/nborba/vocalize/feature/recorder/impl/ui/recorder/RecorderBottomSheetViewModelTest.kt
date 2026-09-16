@@ -2,8 +2,10 @@ package com.nborba.vocalize.feature.recorder.impl.ui.recorder
 
 import android.Manifest
 import com.nborba.vocalize.core.common.util.MainDispatcherExtension
+import com.nborba.vocalize.core.common.util.StringProvider
 import com.nborba.vocalize.core.permission.domain.PermissionChecker
 import com.nborba.vocalize.core.permission.host.PermissionResult
+import com.nborba.vocalize.feature.recorder.impl.R
 import com.nborba.vocalize.feature.recorder.impl.ui.recorder.model.RecorderEffect
 import com.nborba.vocalize.feature.recorder.impl.ui.recorder.model.RecorderState
 import io.mockk.every
@@ -20,16 +22,18 @@ internal class RecorderBottomSheetViewModelTest {
     val mainCoroutinesDispatcher = MainDispatcherExtension()
 
     private val permissionChecker: PermissionChecker = mockk()
+    private val stringProvider: StringProvider = mockk()
     private lateinit var viewModel: RecorderBottomSheetViewModel
 
     @BeforeEach
     fun setUp() {
         every { permissionChecker.hasPermission(Manifest.permission.RECORD_AUDIO) } returns true
+        every { stringProvider.getString(R.string.recorder_recording_saved) } returns "Recording has been saved"
     }
 
     @Test
     fun `when audio permission granted, init starts recording`() {
-        viewModel = RecorderBottomSheetViewModel(permissionChecker = permissionChecker)
+        viewModel = viewModel(permissionChecker = permissionChecker)
 
         assertEquals(RecorderState.Recording, viewModel.uiState.value.state)
     }
@@ -38,7 +42,7 @@ internal class RecorderBottomSheetViewModelTest {
     fun `when audio permission not granted, init requests permission`() {
         every { permissionChecker.hasPermission(Manifest.permission.RECORD_AUDIO) } returns false
 
-        viewModel = RecorderBottomSheetViewModel(permissionChecker = permissionChecker)
+        viewModel = viewModel(permissionChecker = permissionChecker)
 
         assertEquals(RecorderState.Idle, viewModel.uiState.value.state)
         assertEquals(
@@ -49,7 +53,7 @@ internal class RecorderBottomSheetViewModelTest {
 
     @Test
     fun `when onMainButtonClick while recording, pauses recording`() {
-        viewModel = RecorderBottomSheetViewModel(permissionChecker = permissionChecker)
+        viewModel = viewModel(permissionChecker = permissionChecker)
 
         assertEquals(RecorderState.Recording, viewModel.uiState.value.state)
 
@@ -60,7 +64,7 @@ internal class RecorderBottomSheetViewModelTest {
 
     @Test
     fun `when onMainButtonClick while paused, resumes recording`() {
-        viewModel = RecorderBottomSheetViewModel(permissionChecker = permissionChecker)
+        viewModel = viewModel(permissionChecker = permissionChecker)
         viewModel.onMainButtonClick() // Recording -> Paused
         assertEquals(RecorderState.Paused, viewModel.uiState.value.state)
 
@@ -73,7 +77,7 @@ internal class RecorderBottomSheetViewModelTest {
     fun `when onDismissRequest while idle, emits Dismiss effect`() {
         every { permissionChecker.hasPermission(Manifest.permission.RECORD_AUDIO) } returns false
 
-        viewModel = RecorderBottomSheetViewModel(permissionChecker = permissionChecker)
+        viewModel = viewModel(permissionChecker = permissionChecker)
         assertEquals(RecorderState.Idle, viewModel.uiState.value.state)
 
         viewModel.onDismissRequest()
@@ -84,19 +88,22 @@ internal class RecorderBottomSheetViewModelTest {
 
     @Test
     fun `when onDismissRequest while recording, emits Dismiss effect and stops recording`() {
-        viewModel = RecorderBottomSheetViewModel(permissionChecker = permissionChecker)
+        viewModel = viewModel(permissionChecker = permissionChecker)
 
         assertEquals(RecorderState.Recording, viewModel.uiState.value.state)
 
         viewModel.onDismissRequest()
 
         assertEquals(RecorderState.Idle, viewModel.uiState.value.state)
-        assertEquals(RecorderEffect.Dismiss("Recording saved"), viewModel.uiState.value.effect)
+        assertEquals(
+            RecorderEffect.Dismiss("Recording has been saved"),
+            viewModel.uiState.value.effect,
+        )
     }
 
     @Test
     fun `when onDismissRequest while paused, emits Dismiss effect and stops recording`() {
-        viewModel = RecorderBottomSheetViewModel(permissionChecker = permissionChecker)
+        viewModel = viewModel(permissionChecker = permissionChecker)
 
         viewModel.onMainButtonClick() // Recording -> Paused
         assertEquals(RecorderState.Paused, viewModel.uiState.value.state)
@@ -104,13 +111,16 @@ internal class RecorderBottomSheetViewModelTest {
         viewModel.onDismissRequest() // Paused -> Idle
 
         assertEquals(RecorderState.Idle, viewModel.uiState.value.state)
-        assertEquals(RecorderEffect.Dismiss("Recording saved"), viewModel.uiState.value.effect)
+        assertEquals(
+            RecorderEffect.Dismiss("Recording has been saved"),
+            viewModel.uiState.value.effect,
+        )
     }
 
     @Test
     fun `when onAudioPermissionRequestResult Granted, starts recording`() {
         every { permissionChecker.hasPermission(Manifest.permission.RECORD_AUDIO) } returns false
-        viewModel = RecorderBottomSheetViewModel(permissionChecker = permissionChecker)
+        viewModel = viewModel(permissionChecker = permissionChecker)
 
         every { permissionChecker.hasPermission(Manifest.permission.RECORD_AUDIO) } returns true
         viewModel.onAudioPermissionRequestResult(PermissionResult.Granted)
@@ -121,7 +131,7 @@ internal class RecorderBottomSheetViewModelTest {
     @Test
     fun `when onAudioPermissionRequestResult Denied, emits Dismiss effect`() {
         every { permissionChecker.hasPermission(Manifest.permission.RECORD_AUDIO) } returns false
-        viewModel = RecorderBottomSheetViewModel(permissionChecker = permissionChecker)
+        viewModel = viewModel(permissionChecker = permissionChecker)
 
         viewModel.onAudioPermissionRequestResult(PermissionResult.Denied)
 
@@ -131,10 +141,16 @@ internal class RecorderBottomSheetViewModelTest {
     @Test
     fun `when onEffectConsumed, clears effect`() {
         every { permissionChecker.hasPermission(Manifest.permission.RECORD_AUDIO) } returns false
-        viewModel = RecorderBottomSheetViewModel(permissionChecker = permissionChecker)
+        viewModel = viewModel(permissionChecker = permissionChecker)
 
         viewModel.onEffectConsumed()
 
         assertNull(viewModel.uiState.value.effect)
     }
+
+    private fun viewModel(permissionChecker: PermissionChecker): RecorderBottomSheetViewModel =
+        RecorderBottomSheetViewModel(
+            permissionChecker = permissionChecker,
+            stringProvider = stringProvider,
+        )
 }
