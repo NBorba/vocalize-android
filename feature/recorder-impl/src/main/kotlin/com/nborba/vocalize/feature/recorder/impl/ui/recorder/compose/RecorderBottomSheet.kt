@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nborba.vocalize.core.common.util.DefaultEffectHandler
 import com.nborba.vocalize.core.designsystem.component.VocalizeCircularButton
 import com.nborba.vocalize.core.designsystem.theme.spacing
+import com.nborba.vocalize.core.designsystem.util.defaultPadding
 import com.nborba.vocalize.core.permission.host.PermissionPromptHost
 import com.nborba.vocalize.core.permission.host.rememberPermissionPromptHostState
 import com.nborba.vocalize.feature.recorder.impl.ui.recorder.RecorderBottomSheetViewModel
@@ -115,7 +115,7 @@ internal fun RecorderContent(
             modifier
                 .fillMaxWidth()
                 .navigationBarsPadding()
-                .padding(MaterialTheme.spacing.large)
+                .defaultPadding()
                 .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium),
         horizontalAlignment = Alignment.CenterHorizontally,

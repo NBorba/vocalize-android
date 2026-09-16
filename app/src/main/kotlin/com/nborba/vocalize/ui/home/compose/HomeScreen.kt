@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -29,6 +28,7 @@ import com.nborba.vocalize.core.designsystem.component.VocalizeScaffold
 import com.nborba.vocalize.core.designsystem.component.VocalizeTopAppBar
 import com.nborba.vocalize.core.designsystem.icon.VocalizeIcons
 import com.nborba.vocalize.core.designsystem.theme.spacing
+import com.nborba.vocalize.core.designsystem.util.defaultHorizontalPadding
 import com.nborba.vocalize.ui.home.HomeScreenViewModel
 import com.nborba.vocalize.ui.home.model.HomeEffect
 import com.nborba.vocalize.ui.home.model.HomeEffect.NavigateToRecorder
@@ -76,7 +76,7 @@ internal fun HomeContent(
             modifier =
                 modifier
                     .fillMaxSize()
-                    .padding(horizontal = MaterialTheme.spacing.medium),
+                    .defaultHorizontalPadding(),
             contentAlignment = Alignment.Center,
         ) {
             HomeEmptyContent(
