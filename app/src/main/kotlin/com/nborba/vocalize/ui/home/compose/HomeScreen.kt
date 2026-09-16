@@ -2,23 +2,28 @@
 
 package com.nborba.vocalize.ui.home.compose
 
-import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.fromHtml
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nborba.vocalize.core.common.util.DefaultEffectHandler
-import com.nborba.vocalize.core.designsystem.component.VocalizeButton
 import com.nborba.vocalize.core.designsystem.component.VocalizeExtendedFloatingActionButton
 import com.nborba.vocalize.core.designsystem.component.VocalizeScaffold
 import com.nborba.vocalize.core.designsystem.component.VocalizeTopAppBar
@@ -26,17 +31,14 @@ import com.nborba.vocalize.core.designsystem.icon.VocalizeIcons
 import com.nborba.vocalize.core.designsystem.theme.spacing
 import com.nborba.vocalize.ui.home.HomeScreenViewModel
 import com.nborba.vocalize.ui.home.model.HomeEffect
-import com.nborba.vocalize.ui.home.model.HomeEffect.NavigateToDetail
 import com.nborba.vocalize.ui.home.model.HomeEffect.NavigateToRecorder
 import com.nborba.vocalize.ui.home.model.HomeUiState
 import kotlinx.coroutines.flow.Flow
-import kotlin.random.Random
 
 @Composable
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeScreenViewModel = hiltViewModel(),
-    onNavigateToDetail: (String) -> Unit,
     onNavigateToRecorder: () -> Unit,
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -44,34 +46,13 @@ internal fun HomeScreen(
     EffectHandler(
         effectFlow = viewModel.effects,
         onNavigateToRecorder = onNavigateToRecorder,
-        onNavigateToDetail = onNavigateToDetail,
         onEffectConsumed = viewModel::onEffectConsumed,
     )
 
     HomeContent(
         state = state,
         modifier = modifier,
-        onNavigateToDetail = viewModel::onDetailItemClick,
-        onNavigateToRecorder = viewModel::onRecordButtonClick,
-    )
-}
-
-@Composable
-private fun EffectHandler(
-    effectFlow: Flow<HomeEffect?>,
-    onNavigateToRecorder: () -> Unit,
-    onNavigateToDetail: (String) -> Unit,
-    onEffectConsumed: () -> Unit,
-) {
-    DefaultEffectHandler(
-        effectFlow = effectFlow,
-        onEffect = { effect ->
-            when (effect) {
-                NavigateToRecorder -> onNavigateToRecorder()
-                is NavigateToDetail -> onNavigateToDetail(effect.id)
-            }
-        },
-        onConsumeEffect = onEffectConsumed,
+        onRecordButtonClick = viewModel::onRecordButtonClick,
     )
 }
 
@@ -79,57 +60,91 @@ private fun EffectHandler(
 internal fun HomeContent(
     state: HomeUiState,
     modifier: Modifier = Modifier,
-    onNavigateToDetail: (String) -> Unit,
-    onNavigateToRecorder: () -> Unit,
+    onRecordButtonClick: () -> Unit = {},
 ) {
     VocalizeScaffold(
-        topBar = {
-            VocalizeTopAppBar(title = state.title)
-        },
+        topBar = { VocalizeTopAppBar(title = state.title) },
         floatingActionButton = {
             VocalizeExtendedFloatingActionButton(
                 icon = VocalizeIcons.RecordCircle,
                 text = state.buttonRecord,
-                onClick = { onNavigateToRecorder() },
+                onClick = onRecordButtonClick,
             )
         },
-    ) { innerPadding ->
-        Column(
+    ) { _ ->
+        Box(
             modifier =
                 modifier
-                    .padding(innerPadding)
-                    .padding(MaterialTheme.spacing.medium),
+                    .fillMaxSize()
+                    .padding(horizontal = MaterialTheme.spacing.medium),
+            contentAlignment = Alignment.Center,
         ) {
-            Text(
-                text = state.header,
-                style = MaterialTheme.typography.headlineMedium,
-            )
-            Spacer(modifier = Modifier.size(MaterialTheme.spacing.small))
-            VocalizeButton(
-                text = state.buttonDetails,
-                onClick = { onNavigateToDetail(Random.nextInt().toString()) },
+            HomeEmptyContent(
+                title = state.emptyTitle,
+                description = state.emptyDescription,
             )
         }
     }
 }
 
+@Composable
+private fun EffectHandler(
+    effectFlow: Flow<HomeEffect?>,
+    onNavigateToRecorder: () -> Unit,
+    onEffectConsumed: () -> Unit,
+) {
+    DefaultEffectHandler(
+        effectFlow = effectFlow,
+        onEffect = { effect ->
+            when (effect) {
+                NavigateToRecorder -> onNavigateToRecorder()
+            }
+        },
+        onConsumeEffect = onEffectConsumed,
+    )
+}
+
+@Composable
+private fun HomeEmptyContent(
+    title: String,
+    description: String,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement =
+            Arrangement.spacedBy(
+                space = MaterialTheme.spacing.medium,
+                alignment = Alignment.CenterVertically,
+            ),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Icon(
+            imageVector = VocalizeIcons.RecordCircle,
+            contentDescription = null, // Decorative empty state icon
+            modifier = Modifier.size(64.dp),
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onSurface,
+            textAlign = TextAlign.Center,
+        )
+        Text(
+            text = AnnotatedString.fromHtml(description),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = TextAlign.Center,
+        )
+    }
+}
+
 @Preview
 @Composable
-private fun HomeContentPreview() {
-    val context = LocalContext.current
-    val toast: (String) -> Unit = { message ->
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
-
-    HomeContent(
-        state =
-            HomeUiState(
-                title = "Vocalize",
-                header = "Welcome to the app!",
-                buttonDetails = "See details",
-                buttonRecord = "Record",
-            ),
-        onNavigateToDetail = { toast("onNavigateToDetail") },
-        onNavigateToRecorder = { toast("onNavigateToRecorder") },
+private fun HomeEmptyContentPreview() {
+    HomeEmptyContent(
+        title = "No recordings yet",
+        description = "Tap <b>Record</b> below to start your first recording.",
     )
 }

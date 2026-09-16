@@ -6,8 +6,8 @@ internal object HomeUiStateFixture {
     fun default(): HomeUiState =
         HomeUiState(
             title = "Vocalize",
-            header = "Welcome to the app!",
-            buttonDetails = "See details",
+            emptyTitle = "No recordings yet",
+            emptyDescription = "Tap <b>Record</b> below to start your first recording.",
             buttonRecord = "Record",
         )
 }

@@ -20,39 +20,13 @@ class HomeScreenTest {
             VocalizeTheme {
                 HomeContent(
                     state = HomeUiStateFixture.default(),
-                    onNavigateToDetail = {},
-                    onNavigateToRecorder = {},
+                    onRecordButtonClick = {},
                 )
             }
         }
 
         composeTestRule.onNodeWithText("Vocalize").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Welcome to the app!").assertIsDisplayed()
-        composeTestRule.onNodeWithText("See details").assertIsDisplayed()
-    }
-
-    @Test
-    fun clickingSeeDetailsButton_triggersCallback() {
-        var callbackCalled = false
-        var capturedId: String? = null
-
-        composeTestRule.setContent {
-            VocalizeTheme {
-                HomeContent(
-                    state = HomeUiStateFixture.default(),
-                    onNavigateToDetail = { id ->
-                        callbackCalled = true
-                        capturedId = id
-                    },
-                    onNavigateToRecorder = {},
-                )
-            }
-        }
-
-        composeTestRule.onNodeWithText("See details").performClick()
-
-        assertTrue("Expected onNavigateToDetail callback to be invoked", callbackCalled)
-        assertTrue("Expected captured ID to not be empty", !capturedId.isNullOrEmpty())
+        composeTestRule.onNodeWithText("No recordings yet").assertIsDisplayed()
     }
 
     @Test
@@ -63,8 +37,7 @@ class HomeScreenTest {
             VocalizeTheme {
                 HomeContent(
                     state = HomeUiStateFixture.default(),
-                    onNavigateToDetail = {},
-                    onNavigateToRecorder = {
+                    onRecordButtonClick = {
                         callbackCalled = true
                     },
                 )
@@ -73,6 +46,6 @@ class HomeScreenTest {
 
         composeTestRule.onNodeWithText("Record").performClick()
 
-        assertTrue("Expected onNavigateToRecorder callback to be invoked", callbackCalled)
+        assertTrue("Expected onRecordButtonClick callback to be invoked", callbackCalled)
     }
 }

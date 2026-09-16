@@ -2,11 +2,6 @@
     <string name="app_name">Vocalize</string>
 
     <!-- Home screen -->
-    <string name="home_header">Welcome to the app!</string>
-    <string name="home_button_details">See details</string>
-    <string name="home_button_record">Record</string>
-
-    <!-- Detail screen -->
-    <string name="detail_title">Detail #%s</string>
-    <string name="detail_header">Viewing Detail</string>
+    <string name="home_empty_title">No recordings yet</string>
+    <string name="home_empty_description">Tap &lt;b&gt;%s&lt;/b&gt; below to start your first recording.</string>
 </resources>

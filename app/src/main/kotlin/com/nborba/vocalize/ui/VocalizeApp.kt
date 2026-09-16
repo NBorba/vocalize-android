@@ -14,9 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
 import com.nborba.vocalize.feature.recorder.api.navigation.RecorderGraphRoute
 import com.nborba.vocalize.feature.recorder.impl.ui.recorderNavGraph
-import com.nborba.vocalize.navigation.DetailRoute
 import com.nborba.vocalize.navigation.HomeRoute
-import com.nborba.vocalize.ui.detail.compose.DetailScreen
 import com.nborba.vocalize.ui.home.compose.HomeScreen
 
 @Composable
@@ -38,23 +36,7 @@ internal fun VocalizeApp() {
                     ),
             ) {
                 HomeScreen(
-                    onNavigateToDetail = { id ->
-                        navController.navigate(DetailRoute(id))
-                    },
                     onNavigateToRecorder = { navController.navigate(RecorderGraphRoute) },
-                )
-            }
-
-            composable<DetailRoute>(
-                deepLinks =
-                    listOf(
-                        navDeepLink<DetailRoute>(basePath = "https://vocalize.app/detail"),
-                        navDeepLink<DetailRoute>(basePath = "vocalize://detail"),
-                    ),
-            ) {
-                DetailScreen(
-                    onNavigateBack = navController::popBackStack,
-                    onNavigateUp = navController::navigateUp,
                 )
             }
 
