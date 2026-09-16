@@ -8,14 +8,20 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.nborba.vocalize.core.designsystem.icon.VocalizeIcons
@@ -175,6 +181,88 @@ fun VocalizeTextButton(
     }
 }
 
+/**
+ * Floating Action Button (FAB).
+ */
+@Composable
+fun VocalizeFloatingActionButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    shape: Shape = FloatingActionButtonDefaults.shape,
+    containerColor: Color = FloatingActionButtonDefaults.containerColor,
+    contentColor: Color = contentColorFor(containerColor),
+    content: @Composable () -> Unit,
+) {
+    FloatingActionButton(
+        onClick = onClick,
+        modifier = modifier,
+        shape = shape,
+        containerColor = containerColor,
+        contentColor = contentColor,
+        content = content,
+    )
+}
+
+/**
+ * Floating Action Button - Convenience overload for Icon-only FAB.
+ */
+@Composable
+fun VocalizeFloatingActionButton(
+    icon: ImageVector,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    contentDescription: String? = null,
+    shape: Shape = FloatingActionButtonDefaults.shape,
+    containerColor: Color = FloatingActionButtonDefaults.containerColor,
+    contentColor: Color = contentColorFor(containerColor),
+) {
+    VocalizeFloatingActionButton(
+        onClick = onClick,
+        modifier = modifier,
+        shape = shape,
+        containerColor = containerColor,
+        contentColor = contentColor,
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = contentDescription,
+        )
+    }
+}
+
+/**
+ * Extended Floating Action Button - Convenience overload for Icon + Text FAB.
+ */
+@Composable
+fun VocalizeExtendedFloatingActionButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    icon: ImageVector? = null,
+    expanded: Boolean = true,
+    shape: Shape = FloatingActionButtonDefaults.shape,
+    containerColor: Color = FloatingActionButtonDefaults.containerColor,
+    contentColor: Color = contentColorFor(containerColor),
+) {
+    ExtendedFloatingActionButton(
+        onClick = onClick,
+        modifier = modifier,
+        expanded = expanded,
+        shape = shape,
+        containerColor = containerColor,
+        contentColor = contentColor,
+        icon = {
+            if (icon != null) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                )
+            }
+        },
+        text = { Text(text = text) },
+    )
+}
+
 @ThemePreviews
 @Composable
 private fun VocalizeButtonsPreview() {
@@ -224,6 +312,17 @@ private fun VocalizeButtonsPreview() {
                 VocalizeTextButton(
                     text = "Text Disabled",
                     enabled = false,
+                    onClick = {},
+                )
+
+                // Floating Action Buttons
+                VocalizeFloatingActionButton(
+                    icon = VocalizeIcons.RecordCircle,
+                    onClick = {},
+                )
+                VocalizeExtendedFloatingActionButton(
+                    text = "Record",
+                    icon = VocalizeIcons.RecordCircle,
                     onClick = {},
                 )
             }
