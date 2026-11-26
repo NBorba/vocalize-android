@@ -26,6 +26,8 @@ android {
 
     buildTypes {
         release {
+            // Remove for production!
+            signingConfig = signingConfigs.getByName("debug")
             optimization {
                 enable = true
             }
