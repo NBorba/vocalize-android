@@ -42,12 +42,10 @@ internal class RecorderBottomSheetViewModel
         val effects = uiState.map { it.effect }
 
         init {
+            addCloseable(audioRecorder)
+
             observeAudioRecorderState()
             onMainButtonClick()
-        }
-
-        override fun onCleared() {
-            audioRecorder.close()
         }
 
         private fun observeAudioRecorderState() {
