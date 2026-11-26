@@ -18,6 +18,7 @@ internal class GetRecordingFiles
         suspend operator fun invoke(): Result<List<File>> =
             withContext(ioDispatcher) {
                 runCatching {
+                    // TODO: Create a dedicated folder for this. Cache can be wiped
                     context.cacheDir
                         .listFiles { file -> file.isFile && file.extension == "m4a" }
                         ?.toList()
